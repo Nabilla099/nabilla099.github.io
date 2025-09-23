@@ -7,27 +7,19 @@
 ## 💖 Hai, Aku Nabilla!
 
 Selamat datang di halaman link bio-ku yang penuh warna & cinta! 🌸  
-Aku suka berbagi hal-hal menarik, aplikasi, dan update yang bermanfaat buat kamu semua 🫶
+Aku suka berbagi hal-hal menarik, dan update yang menarik.
 
 ---
 
 ## 🔗 Isi Halaman Ini
-
-✨ **Download Aplikasi & Tools**  
-🎮 **FAQ J2ME Loader**  
-🌐 **Link ke Sosial Media & Proyekku**  
-🎁 **Hal random tapi lucu**
 
 > Semuanya dirangkum rapi supaya kamu bisa klik-klik cantik tanpa ribet 🧸
 
 ---
 
 ## 📎 Link-Link Penting (Klik Tombolnya 💻)
-
-[![Download Aplikasi](https://img.shields.io/badge/📱-Download_Aplikasi-ffb6c1?style=for-the-badge)](#)  
-[![FAQ J2ME Loader](https://img.shields.io/badge/🛠️-FAQ_J2ME_Loader-fcc9e9?style=for-the-badge)](#)  
+    
 [![GitHub Projects](https://img.shields.io/badge/💻-GitHub_Projects-fcb1d8?style=for-the-badge)](https://github.com/nabilla099)  
-[![Hal Lucu Random](https://img.shields.io/badge/🎁-Hal_Lucu_Random-f9c2d1?style=for-the-badge)](#)
 
 ---
 
