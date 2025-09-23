@@ -25,7 +25,7 @@ Aku suka berbagi hal-hal menarik, dan update yang menarik.
 
 ## 💌 Keep in Touch!
 
-[![Facebook](https://img.shields.io/badge/💬-Instagram-ea7fbc?style=for-the-badge&logo=instagram)](https://facebook.com/nabilla.kh)  
+[![Facebook](https://img.shields.io/badge/💬-Facebook-ea7fbc?style=for-the-badge&logo=facebook)](https://facebook.com/nabilla.kh)  
 [![GitHub](https://img.shields.io/badge/💻-GitHub-ffb6b9?style=for-the-badge&logo=github)](https://github.com/nabilla099)
 
 ---
