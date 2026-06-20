@@ -199,7 +199,7 @@
   <br><br>
   <sub>
     <b>NabillaKH - J2ME Editor</b><br>
-    <i>Dibangun dengan cinta untuk komunitas J2ME</i>
+    <i>Dibangun dengan Kerja keras</i>
   </sub>
   <br><br>
 </div>
