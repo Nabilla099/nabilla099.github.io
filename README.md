@@ -224,6 +224,6 @@
   <br><br>
   <sub>© 2026 NabillaKH</sub>
   <br>
-  <sub>Mode Gelap Siap • Responsif • Desain Profesional</sub>
+  <sub>Mode Gelap Siap • Responsif</sub>
   <br><br>
 </div>
