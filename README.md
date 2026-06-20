@@ -209,10 +209,10 @@
 ## Kontak
 
 <div align="center">
-  <a href="https://facebook.com/nabillakh">
+  <a href="https://www.facebook.com/nabillaa.kh">
     <img src="https://img.shields.io/badge/Facebook-NabillaKH-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"/>
   </a>
-  <a href="https://facebook.com/hyne">
+  <a href="https://www.facebook.com/profile.php?id=61582519081872">
     <img src="https://img.shields.io/badge/Facebook-Hyne-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"/>
   </a>
 </div>
