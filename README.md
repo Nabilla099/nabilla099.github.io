@@ -15,11 +15,11 @@
 <br>
 
 <p align="center">
-  <b>Editor Profesional untuk File J2ME dengan Ekstraktor JAR/ZIP, Mesin Pencari, dan Fitur Lengkap</b>
+  <b>Editor untuk File J2ME dengan Ekstraktor JAR/ZIP</b>
 </p>
 
 <p align="center">
-  <i>Dibangun dengan cinta untuk komunitas J2ME</i>
+  <i>Dibangun dengan kerja keras</i>
 </p>
 
 ---
