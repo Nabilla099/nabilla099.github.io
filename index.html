@@ -64,9 +64,10 @@ title: Beranda
     {% assign games = site.games | sort: 'date' | reverse %}
     {% for game in games %}
     <a class="game-card" href="{{ game.url | relative_url }}" data-search="{{ game.title }} {{ game.category }}" data-category="{{ game.category }}">
+      {% capture card_src %}{% if game.screenshot contains '://' %}{{ game.screenshot }}{% else %}{{ game.screenshot | relative_url }}{% endif %}{% endcapture %}
       <div class="phone-frame">
-        <div class="screen">
-          <img src="{% if game.screenshot contains '://' %}{{ game.screenshot }}{% else %}{{ game.screenshot | relative_url }}{% endif %}" alt="Screenshot {{ game.title }}" loading="lazy">
+        <div class="screen" style="background-image:url('{{ card_src }}')">
+          <img src="{{ card_src }}" alt="Screenshot {{ game.title }}" loading="lazy">
         </div>
         {% if game.screenshots and game.screenshots.size > 1 %}
         <span class="multi-badge">{{ game.screenshots.size }} Foto</span>

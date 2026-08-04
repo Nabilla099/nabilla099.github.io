@@ -15,7 +15,17 @@ document.addEventListener("DOMContentLoaded", () => {
   initCarousel();
   initHeroStack();
   initHeroTilt();
+  initImageFallback();
 });
+
+/* ---------- Sembunyikan gambar yang gagal dimuat (404/link putus) ---------- */
+function initImageFallback() {
+  document.querySelectorAll("img").forEach((img) => {
+    img.addEventListener("error", () => {
+      img.style.display = "none";
+    });
+  });
+}
 
 /* ======================================================
    KATALOG: search + filter kategori + pagination terpadu
@@ -152,6 +162,7 @@ function initHeroStack() {
       a.href = g.url;
       a.className = posClasses[i] || "stack-phone";
       a.setAttribute("aria-label", g.title);
+      a.style.backgroundImage = `url('${g.screenshot}')`;
 
       if (!reduceMotion) {
         a.style.transition = "none";
@@ -163,6 +174,7 @@ function initHeroStack() {
       img.src = g.screenshot;
       img.alt = g.title;
       img.loading = "lazy";
+      img.addEventListener("error", () => { a.style.display = "none"; });
       a.appendChild(img);
       wrap.appendChild(a);
     });

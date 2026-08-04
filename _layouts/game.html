@@ -12,10 +12,12 @@ layout: default
         <div class="ig-track">
           {% if shots %}
             {% for shot in shots %}
-              <div class="ig-slide"><img src="{% if shot contains '://' %}{{ shot }}{% else %}{{ shot | relative_url }}{% endif %}" alt="Screenshot {{ page.title }} {{ forloop.index }}" loading="lazy"></div>
+              {% capture slide_src %}{% if shot contains '://' %}{{ shot }}{% else %}{{ shot | relative_url }}{% endif %}{% endcapture %}
+              <div class="ig-slide" style="background-image:url('{{ slide_src }}')"><img src="{{ slide_src }}" alt="Screenshot {{ page.title }} {{ forloop.index }}" loading="lazy"></div>
             {% endfor %}
           {% else %}
-            <div class="ig-slide"><img src="{% if page.screenshot contains '://' %}{{ page.screenshot }}{% else %}{{ page.screenshot | relative_url }}{% endif %}" alt="Screenshot {{ page.title }}" loading="lazy"></div>
+            {% capture slide_src %}{% if page.screenshot contains '://' %}{{ page.screenshot }}{% else %}{{ page.screenshot | relative_url }}{% endif %}{% endcapture %}
+            <div class="ig-slide" style="background-image:url('{{ slide_src }}')"><img src="{{ slide_src }}" alt="Screenshot {{ page.title }}" loading="lazy"></div>
           {% endif %}
         </div>
       </div>
@@ -76,9 +78,10 @@ layout: default
       {% assign others = site.games | where_exp: "g", "g.url != page.url" | sample: 3 %}
       {% for game in others %}
       <a class="game-card" href="{{ game.url | relative_url }}">
+        {% capture rel_src %}{% if game.screenshot contains '://' %}{{ game.screenshot }}{% else %}{{ game.screenshot | relative_url }}{% endif %}{% endcapture %}
         <div class="phone-frame">
-          <div class="screen">
-            <img src="{% if game.screenshot contains '://' %}{{ game.screenshot }}{% else %}{{ game.screenshot | relative_url }}{% endif %}" alt="Screenshot {{ game.title }}" loading="lazy">
+          <div class="screen" style="background-image:url('{{ rel_src }}')">
+            <img src="{{ rel_src }}" alt="Screenshot {{ game.title }}" loading="lazy">
           </div>
         </div>
         <div class="body">
