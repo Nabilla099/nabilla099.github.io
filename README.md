@@ -51,16 +51,19 @@ Script akan menanyakan:
 - Kategori
 - Resolusi (mis. `240x320`)
 - Ukuran file
-- Versi
-- **Link screenshot** (upload dulu screenshot ke Imgur/Postimg/dll, lalu tempel link gambarnya)
-- **Link download** (link pihak ketiga tempat file `.jar`/`.jad` disimpan)
+- Vendor / studio pembuat
+- Nama translator
+- **Sumber screenshot** — pilih salah satu:
+  - **File di HP**: kasih path file screenshot dari galeri/DCIM kamu (boleh lebih dari satu, pisah koma). File otomatis disalin ke `assets/img/games/nama-slug/` di dalam repo, jadi tidak perlu upload ke situs lain.
+  - **Link URL**: kalau screenshot-nya sudah diupload ke Imgur/Postimg/dll, tinggal tempel link-nya.
+- Link download (link pihak ketiga)
 - Deskripsi game
 
-Setelah itu file `_games/nama-slug.md` otomatis dibuat, dan script akan tanya apakah mau langsung `git push`. Kalau ya, situs langsung ter-update otomatis dalam 1-2 menit.
+Setelah itu file `_games/nama-slug.md` otomatis dibuat, dan script akan tanya apakah mau langsung `git push`. Kalau ya, situs langsung ter-update otomatis dalam 1-2 menit — termasuk file screenshot yang disalin dari HP tadi.
 
 ### Cara manual (tanpa script)
 
-Bikin file baru di `_games/judul-game.md`, isinya:
+Bikin file baru di `_games/judul-game.md`. Screenshot bisa pakai **link eksternal** ATAU **file lokal di repo** (taruh gambarnya di `assets/img/games/judul-game/` lalu tulis path-nya diawali `/`):
 
 ```markdown
 ---
@@ -72,11 +75,11 @@ resolution: "240x320"
 size: "1.5 MB"
 vendor: "Nama Studio/Vendor"
 translator: "Nama Kamu"
-screenshot: "https://link-gambar-screenshot-1.jpg"
+screenshot: "/assets/img/games/judul-game/1.jpg"
 screenshots:
-  - "https://link-gambar-screenshot-1.jpg"
-  - "https://link-gambar-screenshot-2.jpg"
-  - "https://link-gambar-screenshot-3.jpg"
+  - "/assets/img/games/judul-game/1.jpg"
+  - "/assets/img/games/judul-game/2.jpg"
+  - "/assets/img/games/judul-game/3.jpg"
 download: "https://link-download-pihak-ketiga.com/file.jar"
 description: >
   Deskripsi singkat tentang game ini, ceritanya apa, gameplay-nya seperti apa.

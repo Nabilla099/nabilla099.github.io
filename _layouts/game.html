@@ -12,10 +12,10 @@ layout: default
         <div class="ig-track">
           {% if shots %}
             {% for shot in shots %}
-              <div class="ig-slide"><img src="{{ shot }}" alt="Screenshot {{ page.title }} {{ forloop.index }}" loading="lazy"></div>
+              <div class="ig-slide"><img src="{% if shot contains '://' %}{{ shot }}{% else %}{{ shot | relative_url }}{% endif %}" alt="Screenshot {{ page.title }} {{ forloop.index }}" loading="lazy"></div>
             {% endfor %}
           {% else %}
-            <div class="ig-slide"><img src="{{ page.screenshot }}" alt="Screenshot {{ page.title }}" loading="lazy"></div>
+            <div class="ig-slide"><img src="{% if page.screenshot contains '://' %}{{ page.screenshot }}{% else %}{{ page.screenshot | relative_url }}{% endif %}" alt="Screenshot {{ page.title }}" loading="lazy"></div>
           {% endif %}
         </div>
       </div>
@@ -78,7 +78,7 @@ layout: default
       <a class="game-card" href="{{ game.url | relative_url }}">
         <div class="phone-frame">
           <div class="screen">
-            <img src="{{ game.screenshot }}" alt="Screenshot {{ game.title }}" loading="lazy">
+            <img src="{% if game.screenshot contains '://' %}{{ game.screenshot }}{% else %}{{ game.screenshot | relative_url }}{% endif %}" alt="Screenshot {{ game.title }}" loading="lazy">
           </div>
         </div>
         <div class="body">

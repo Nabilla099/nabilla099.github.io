@@ -51,7 +51,7 @@ title: Beranda
     <a class="game-card" href="{{ game.url | relative_url }}" data-search="{{ game.title }} {{ game.category }}" data-category="{{ game.category }}">
       <div class="phone-frame">
         <div class="screen">
-          <img src="{{ game.screenshot }}" alt="Screenshot {{ game.title }}" loading="lazy">
+          <img src="{% if game.screenshot contains '://' %}{{ game.screenshot }}{% else %}{{ game.screenshot | relative_url }}{% endif %}" alt="Screenshot {{ game.title }}" loading="lazy">
         </div>
         {% if game.screenshots and game.screenshots.size > 1 %}
         <span class="multi-badge">{{ game.screenshots.size }} Foto</span>
