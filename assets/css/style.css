@@ -44,7 +44,25 @@ body{
   background-attachment: fixed;
   min-height: 100vh;
   line-height: 1.55;
+  animation: pageFadeIn .6s ease both;
 }
+
+@keyframes pageFadeIn{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
+}
+
+@keyframes fadeSlideUp{
+  from{ opacity: 0; transform: translateY(22px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
+
+.hero-copy .eyebrow{ animation: fadeSlideUp .7s .05s cubic-bezier(.2,.8,.2,1) both; }
+.hero-copy h1{ animation: fadeSlideUp .7s .15s cubic-bezier(.2,.8,.2,1) both; }
+.hero-copy .lead{ animation: fadeSlideUp .7s .25s cubic-bezier(.2,.8,.2,1) both; }
+.hero-search{ animation: fadeSlideUp .7s .35s cubic-bezier(.2,.8,.2,1) both; }
+.hero-stats{ animation: fadeSlideUp .7s .45s cubic-bezier(.2,.8,.2,1) both; }
+.hero-visual{ animation: fadeSlideUp .8s .3s cubic-bezier(.2,.8,.2,1) both; }
 
 /* Ganti semua highlight/focus biar tidak pernah biru */
 ::selection{ background: var(--pink-300); color: var(--white); }
@@ -310,6 +328,9 @@ footer.site-footer{
 @media (prefers-reduced-motion: reduce){
   .btn::before{ animation: none; }
   html{ scroll-behavior: auto; }
+  body,
+  .hero-copy .eyebrow, .hero-copy h1, .hero-copy .lead,
+  .hero-search, .hero-stats, .hero-visual{ animation: none; }
 }
 
 /* =========================================================
@@ -394,12 +415,14 @@ footer.site-footer{
 .hero-stats strong{ font-family: var(--font-display); font-size: 1.3rem; color: var(--pink-700); }
 .hero-stats span{ font-size: .78rem; color: var(--rose-ink-soft); font-family: var(--font-mono); }
 
-.hero-visual{ position:relative; height: 320px; display:flex; align-items:center; justify-content:center; }
+.hero-visual{ position:relative; height: 320px; display:flex; align-items:center; justify-content:center; perspective: 900px; }
 .stack-wrap{
   position:relative; width:100%; height:100%;
   display:flex; align-items:center; justify-content:center;
   cursor: grab; touch-action: pan-y;
   -webkit-user-select:none; user-select:none;
+  transform-style: preserve-3d;
+  transition: transform .3s ease;
 }
 .stack-wrap:active{ cursor: grabbing; }
 .stack-phone{
@@ -486,4 +509,54 @@ footer.site-footer{
 .footer-bottom{
   margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--pink-100);
   text-align:center; font-size: .82rem; color: var(--rose-ink-soft);
+}
+
+/* =========================================================
+   KH — Tambahan v3: pagination & polesan tampilan desktop
+   ========================================================= */
+
+/* ---------- Pagination ---------- */
+.pagination{
+  display:flex; align-items:center; justify-content:center; gap: 8px;
+  flex-wrap: wrap; margin: 10px 0 60px;
+}
+.page-btn{
+  min-width: 40px; height: 40px; padding: 0 12px;
+  border-radius: 10px; border: 2px solid var(--pink-200);
+  background: var(--white); color: var(--rose-ink-soft);
+  font-family: var(--font-body); font-weight: 700; font-size: .9rem;
+  cursor: pointer; transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.page-btn:hover:not(:disabled){ border-color: var(--pink-400); color: var(--pink-700); }
+.page-btn.active{
+  background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+  color: var(--white); border-color: transparent;
+}
+.page-btn:disabled{ opacity: .4; cursor: not-allowed; }
+.page-btn.page-nav{ padding: 0 16px; }
+
+/* ---------- Polesan tampilan desktop ---------- */
+@media (min-width: 1200px){
+  .wrap{ max-width: 1280px; }
+
+  .hero{ padding: 80px 0 32px; }
+  .hero-inner{ gap: 60px; }
+  .hero-copy .lead{ font-size: 1.12rem; max-width: 520px; }
+  .hero-visual{ height: 380px; }
+  .stack-phone{ width: 168px; height: 288px; }
+
+  .game-grid{
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 28px;
+  }
+
+  .site-nav a{ font-size: .95rem; padding: 10px 18px; }
+  .section-head h2{ font-size: 1.6rem; }
+
+  .detail-grid{ gap: 56px; }
+}
+
+@media (min-width: 1500px){
+  .wrap{ max-width: 1400px; }
+  .game-grid{ grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 }

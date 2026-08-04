@@ -49,7 +49,7 @@ title: Beranda
   </div>
   <div class="chip-filter" id="chip-filter">
     <button class="chip-btn active" data-filter="all">Semua</button>
-    {% assign cats = site.games | map: "category" | uniq | sort %}
+    {% assign cats = site.games | map: "category" | compact | uniq | sort %}
     {% for c in cats %}
       {% if c %}<button class="chip-btn" data-filter="{{ c }}">{{ c }}</button>{% endif %}
     {% endfor %}
@@ -88,4 +88,6 @@ title: Beranda
   <div id="empty-state" class="empty-state" style="display:none;">
     Game tidak ditemukan. Coba kata kunci atau kategori lain.
   </div>
+
+  <div class="pagination" id="pagination"></div>
 </div>

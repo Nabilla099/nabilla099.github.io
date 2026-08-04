@@ -1,13 +1,13 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # =========================================================
-# add_game.sh — Tambah game J2ME baru ke Kh-Store
+# add_game.sh — Tambah game J2ME baru ke Kh
 # Pakai di Termux, jalankan dari dalam folder repo:
 #   bash add_game.sh
 # =========================================================
 
 set -e
 
-echo "=== Tambah Game Baru ke Kh-Store ==="
+echo "=== Tambah Game Baru ke Kh ==="
 read -p "Judul game        : " TITLE
 
 # Bikin slug lebih awal karena dipakai buat nama folder screenshot
@@ -104,7 +104,8 @@ vendor: "${VENDOR}"
 translator: "${TRANSLATOR}"
 screenshot: "${SCREENSHOT}"
 screenshots:
-$(echo -e "$SCREENSHOTS_YAML")download: "${DOWNLOAD}"
+$(echo -e "$SCREENSHOTS_YAML")
+download: "${DOWNLOAD}"
 description: >
   ${DESCRIPTION}
 ---

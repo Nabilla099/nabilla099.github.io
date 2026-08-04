@@ -1,21 +1,122 @@
 // =========================================================
-// J2ME VAULT — main.js
+// KH — main.js
 // 1) Efek ripple (gelombang) saat tombol diklik/disentuh
 // 2) Pencegahan "copy link" saat tombol download ditekan lama
-// 3) Pencarian game sederhana di halaman utama (jika ada)
+// 3) Katalog: pencarian + filter kategori + pagination (terpadu)
+// 4) Hero stack: screenshot acak, geser manual, auto-cycle ke belakang
+// 5) Tilt halus di hero-visual khusus desktop (mouse)
 // =========================================================
 
 document.addEventListener("DOMContentLoaded", () => {
   initRipple();
   initDownloadButtons();
-  initSearch();
   initMobileMenu();
-  initCategoryFilter();
+  initCatalog();
   initCarousel();
   initHeroStack();
+  initHeroTilt();
 });
 
-/* ---------- Stack screenshot di hero: acak, geser, klik ke game ---------- */
+/* ======================================================
+   KATALOG: search + filter kategori + pagination terpadu
+   ====================================================== */
+function initCatalog() {
+  const cards = Array.from(document.querySelectorAll(".game-card[data-category]"));
+  if (cards.length === 0) return;
+
+  const searchInput = document.getElementById("game-search");
+  const chips = Array.from(document.querySelectorAll(".chip-btn"));
+  const empty = document.getElementById("empty-state");
+  const paginationEl = document.getElementById("pagination");
+  const PAGE_SIZE = 9;
+
+  let currentPage = 1;
+
+  function getFiltered() {
+    const q = (searchInput?.value || "").trim().toLowerCase();
+    const activeChip = chips.find((c) => c.classList.contains("active"));
+    const filter = activeChip ? activeChip.getAttribute("data-filter") : "all";
+
+    return cards.filter((card) => {
+      const matchCategory = filter === "all" || card.getAttribute("data-category") === filter;
+      const haystack = (card.getAttribute("data-search") || "").toLowerCase();
+      const matchSearch = !q || haystack.includes(q);
+      return matchCategory && matchSearch;
+    });
+  }
+
+  function renderPagination(totalPages) {
+    if (!paginationEl) return;
+    paginationEl.innerHTML = "";
+    if (totalPages <= 1) return;
+
+    const prev = document.createElement("button");
+    prev.className = "page-btn page-nav";
+    prev.textContent = "‹ Sebelumnya";
+    prev.disabled = currentPage === 1;
+    prev.addEventListener("click", () => { currentPage--; update(); scrollToGrid(); });
+    paginationEl.appendChild(prev);
+
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement("button");
+      btn.className = "page-btn" + (i === currentPage ? " active" : "");
+      btn.textContent = i;
+      btn.addEventListener("click", () => { currentPage = i; update(); scrollToGrid(); });
+      paginationEl.appendChild(btn);
+    }
+
+    const next = document.createElement("button");
+    next.className = "page-btn page-nav";
+    next.textContent = "Berikutnya ›";
+    next.disabled = currentPage === totalPages;
+    next.addEventListener("click", () => { currentPage++; update(); scrollToGrid(); });
+    paginationEl.appendChild(next);
+  }
+
+  function scrollToGrid() {
+    document.getElementById("kategori")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function update() {
+    const filtered = getFiltered();
+    const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+    currentPage = Math.min(currentPage, totalPages);
+
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    const pageItems = new Set(filtered.slice(start, end));
+
+    cards.forEach((card) => {
+      card.style.display = pageItems.has(card) ? "" : "none";
+    });
+
+    if (empty) empty.style.display = filtered.length === 0 ? "block" : "none";
+    renderPagination(totalPages);
+  }
+
+  searchInput?.addEventListener("input", () => {
+    if (searchInput.value.trim()) {
+      chips.forEach((c) => c.classList.remove("active"));
+      chips.find((c) => c.getAttribute("data-filter") === "all")?.classList.add("active");
+    }
+    currentPage = 1;
+    update();
+  });
+
+  chips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      chips.forEach((c) => c.classList.remove("active"));
+      chip.classList.add("active");
+      if (searchInput) searchInput.value = "";
+      currentPage = 1;
+      update();
+    });
+  });
+
+  update();
+}
+
+/* ---------- Stack screenshot di hero: acak, geser, klik ke game, auto-cycle ---------- */
 function initHeroStack() {
   const dataEl = document.getElementById("hero-games-data");
   const wrap = document.getElementById("stack-wrap");
@@ -31,6 +132,7 @@ function initHeroStack() {
   if (games.length === 0) return;
 
   const posClasses = ["stack-phone phone-a", "stack-phone phone-b", "stack-phone phone-c"];
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function pickRandom(n) {
     const pool = [...games];
@@ -51,6 +153,12 @@ function initHeroStack() {
       a.className = posClasses[i] || "stack-phone";
       a.setAttribute("aria-label", g.title);
 
+      if (!reduceMotion) {
+        a.style.transition = "none";
+        a.style.opacity = "0";
+        a.style.transform = "scale(.8) translateY(26px)";
+      }
+
       const img = document.createElement("img");
       img.src = g.screenshot;
       img.alt = g.title;
@@ -58,9 +166,40 @@ function initHeroStack() {
       a.appendChild(img);
       wrap.appendChild(a);
     });
+
+    if (!reduceMotion) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          wrap.querySelectorAll(".stack-phone").forEach((el) => {
+            el.style.transition = "transform .55s cubic-bezier(.2,.8,.2,1), opacity .55s ease";
+            el.style.opacity = "";
+            el.style.transform = "";
+          });
+        });
+      });
+    }
+  }
+
+  function cycleOut(callback) {
+    const els = wrap.querySelectorAll(".stack-phone");
+    if (reduceMotion || els.length === 0) { callback(); return; }
+    els.forEach((el) => {
+      el.style.transition = "transform .45s ease, opacity .45s ease";
+      el.style.transform = "scale(.82) translateY(24px)";
+      el.style.opacity = "0";
+    });
+    setTimeout(callback, 430);
   }
 
   render();
+
+  // Auto-cycle: kartu depan "gulir ke belakang", diganti kartu baru
+  let autoplay;
+  function startAutoplay() {
+    clearInterval(autoplay);
+    autoplay = setInterval(() => cycleOut(render), 4200);
+  }
+  if (!reduceMotion) startAutoplay();
 
   // Deteksi geser (swipe/drag) vs tap biasa
   let startX = 0, dragging = false, moved = false;
@@ -78,8 +217,8 @@ function initHeroStack() {
 
   wrap.addEventListener("pointerup", () => {
     if (dragging && moved) {
-      // beri jeda dikit biar klik (yang dibatalkan) sempat diproses dulu
-      setTimeout(render, 60);
+      cycleOut(render);
+      if (!reduceMotion) startAutoplay();
     }
     dragging = false;
   });
@@ -93,6 +232,28 @@ function initHeroStack() {
   }, true);
 }
 
+/* ---------- Tilt halus hero-visual, khusus desktop (mouse) ---------- */
+function initHeroTilt() {
+  const wrap = document.getElementById("stack-wrap");
+  if (!wrap) return;
+  if (!window.matchMedia("(pointer: fine)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const visual = wrap.closest(".hero-visual");
+  if (!visual) return;
+
+  visual.addEventListener("mousemove", (e) => {
+    const rect = visual.getBoundingClientRect();
+    const relX = (e.clientX - rect.left) / rect.width - 0.5;
+    const relY = (e.clientY - rect.top) / rect.height - 0.5;
+    wrap.style.transform = `rotateY(${relX * 10}deg) rotateX(${relY * -10}deg)`;
+  });
+
+  visual.addEventListener("mouseleave", () => {
+    wrap.style.transform = "";
+  });
+}
+
 /* ---------- Menu mobile (hamburger) ---------- */
 function initMobileMenu() {
   const toggle = document.getElementById("menu-toggle");
@@ -103,34 +264,6 @@ function initMobileMenu() {
   nav.querySelectorAll("a").forEach((a) =>
     a.addEventListener("click", () => nav.classList.remove("open"))
   );
-}
-
-/* ---------- Filter kategori (chip) di beranda ---------- */
-function initCategoryFilter() {
-  const chips = document.querySelectorAll(".chip-btn");
-  const cards = document.querySelectorAll(".game-card[data-category]");
-  const empty = document.getElementById("empty-state");
-  if (chips.length === 0) return;
-
-  chips.forEach((chip) => {
-    chip.addEventListener("click", () => {
-      chips.forEach((c) => c.classList.remove("active"));
-      chip.classList.add("active");
-      const filter = chip.getAttribute("data-filter");
-      let visible = 0;
-
-      cards.forEach((card) => {
-        const match = filter === "all" || card.getAttribute("data-category") === filter;
-        card.style.display = match ? "" : "none";
-        if (match) visible++;
-      });
-
-      if (empty) empty.style.display = visible === 0 ? "block" : "none";
-
-      const search = document.getElementById("game-search");
-      if (search) search.value = "";
-    });
-  });
 }
 
 /* ---------- Carousel screenshot ala Instagram (dots sync) ---------- */
@@ -151,7 +284,7 @@ function initCarousel() {
   });
 }
 
-/* ---------- 1) Ripple effect untuk semua .btn ---------- */
+/* ---------- Ripple effect untuk semua .btn ---------- */
 function initRipple() {
   document.querySelectorAll(".btn").forEach((btn) => {
     btn.addEventListener("pointerdown", (e) => {
@@ -172,63 +305,29 @@ function initRipple() {
   });
 }
 
-/* ---------- 2) Tombol download: bukan <a>, jadi tidak bisa
+/* ---------- Tombol download: bukan <a>, jadi tidak bisa
    "copy link address" via tekan lama / klik kanan ---------- */
 function initDownloadButtons() {
   document.querySelectorAll(".btn-download").forEach((btn) => {
     const url = btn.getAttribute("data-url");
     if (!url) return;
 
-    // Klik biasa / tap singkat -> buka link download di tab baru
     btn.addEventListener("click", (e) => {
       e.preventDefault();
       window.open(url, "_blank", "noopener");
     });
 
-    // Blokir menu klik-kanan (desktop)
     btn.addEventListener("contextmenu", (e) => e.preventDefault());
 
-    // Blokir long-press callout di iOS/Android (share/copy link menu)
     let pressTimer = null;
     btn.addEventListener("touchstart", (e) => {
       pressTimer = setTimeout(() => {
-        // Jika tetap tertekan lebih dari 400ms, batalkan aksi apapun selain klik biasa
         e.preventDefault();
       }, 400);
     }, { passive: false });
 
     btn.addEventListener("touchend", () => clearTimeout(pressTimer));
     btn.addEventListener("touchmove", () => clearTimeout(pressTimer));
-
-    // Cegah drag (beberapa browser mengizinkan drag teks/link)
     btn.addEventListener("dragstart", (e) => e.preventDefault());
-  });
-}
-
-/* ---------- 3) Pencarian game di index (opsional, jika elemen ada) ---------- */
-function initSearch() {
-  const input = document.getElementById("game-search");
-  const cards = document.querySelectorAll(".game-card");
-  const empty = document.getElementById("empty-state");
-  if (!input || cards.length === 0) return;
-
-  input.addEventListener("input", () => {
-    const q = input.value.trim().toLowerCase();
-    let visibleCount = 0;
-
-    if (q) {
-      document.querySelectorAll(".chip-btn").forEach((c) => c.classList.remove("active"));
-      const allChip = document.querySelector('.chip-btn[data-filter="all"]');
-      if (allChip) allChip.classList.add("active");
-    }
-
-    cards.forEach((card) => {
-      const haystack = (card.getAttribute("data-search") || "").toLowerCase();
-      const match = haystack.includes(q);
-      card.style.display = match ? "" : "none";
-      if (match) visibleCount++;
-    });
-
-    if (empty) empty.style.display = visibleCount === 0 ? "block" : "none";
   });
 }
