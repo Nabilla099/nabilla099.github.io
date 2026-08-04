@@ -12,7 +12,86 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileMenu();
   initCategoryFilter();
   initCarousel();
+  initHeroStack();
 });
+
+/* ---------- Stack screenshot di hero: acak, geser, klik ke game ---------- */
+function initHeroStack() {
+  const dataEl = document.getElementById("hero-games-data");
+  const wrap = document.getElementById("stack-wrap");
+  if (!dataEl || !wrap) return;
+
+  let games;
+  try {
+    games = JSON.parse(dataEl.textContent);
+  } catch (e) {
+    return; // biarkan fallback statis kalau data gagal dibaca
+  }
+  games = games.filter((g) => g.screenshot && g.url);
+  if (games.length === 0) return;
+
+  const posClasses = ["stack-phone phone-a", "stack-phone phone-b", "stack-phone phone-c"];
+
+  function pickRandom(n) {
+    const pool = [...games];
+    const picked = [];
+    while (picked.length < n && pool.length) {
+      const i = Math.floor(Math.random() * pool.length);
+      picked.push(pool.splice(i, 1)[0]);
+    }
+    return picked;
+  }
+
+  function render() {
+    const picks = pickRandom(Math.min(3, games.length));
+    wrap.innerHTML = "";
+    picks.forEach((g, i) => {
+      const a = document.createElement("a");
+      a.href = g.url;
+      a.className = posClasses[i] || "stack-phone";
+      a.setAttribute("aria-label", g.title);
+
+      const img = document.createElement("img");
+      img.src = g.screenshot;
+      img.alt = g.title;
+      img.loading = "lazy";
+      a.appendChild(img);
+      wrap.appendChild(a);
+    });
+  }
+
+  render();
+
+  // Deteksi geser (swipe/drag) vs tap biasa
+  let startX = 0, dragging = false, moved = false;
+
+  wrap.addEventListener("pointerdown", (e) => {
+    startX = e.clientX;
+    dragging = true;
+    moved = false;
+  });
+
+  wrap.addEventListener("pointermove", (e) => {
+    if (!dragging) return;
+    if (Math.abs(e.clientX - startX) > 12) moved = true;
+  });
+
+  wrap.addEventListener("pointerup", () => {
+    if (dragging && moved) {
+      // beri jeda dikit biar klik (yang dibatalkan) sempat diproses dulu
+      setTimeout(render, 60);
+    }
+    dragging = false;
+  });
+
+  // Kalau tergeser, batalkan navigasi klik (biar swipe gak ke-trigger buka game)
+  wrap.addEventListener("click", (e) => {
+    if (moved) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+}
 
 /* ---------- Menu mobile (hamburger) ---------- */
 function initMobileMenu() {

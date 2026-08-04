@@ -395,14 +395,26 @@ footer.site-footer{
 .hero-stats span{ font-size: .78rem; color: var(--rose-ink-soft); font-family: var(--font-mono); }
 
 .hero-visual{ position:relative; height: 320px; display:flex; align-items:center; justify-content:center; }
+.stack-wrap{
+  position:relative; width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  cursor: grab; touch-action: pan-y;
+  -webkit-user-select:none; user-select:none;
+}
+.stack-wrap:active{ cursor: grabbing; }
 .stack-phone{
   position:absolute; width: 150px; height: 260px; border-radius: 26px;
   background: linear-gradient(160deg, var(--white), var(--pink-100));
   border: 3px solid var(--white); box-shadow: 0 24px 50px -20px var(--shadow-pink);
+  overflow: hidden; display:block; transition: transform .25s ease, opacity .25s ease;
 }
 .stack-phone::before{
   content:""; position:absolute; inset: 14px; border-radius: 14px;
   background: linear-gradient(160deg, var(--pink-200), var(--pink-50));
+}
+.stack-phone img{
+  position:relative; width:100%; height:100%; object-fit: cover; display:block;
+  border-radius: 22px; pointer-events: none;
 }
 .phone-a{ transform: rotate(-14deg) translateX(-70px); z-index:1; }
 .phone-b{ transform: rotate(3deg); z-index:2; }
