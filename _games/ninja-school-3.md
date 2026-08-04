@@ -5,7 +5,8 @@ date: 2026-07-20
 category: "Action RPG"
 resolution: "128x160"
 size: "980 KB"
-version: "3.0"
+vendor: "Digital Chocolate"
+translator: "Nabilla-Khanza"
 screenshot: "https://i.imgur.com/CONTOH-SCREENSHOT-2.jpg"
 download: "https://contoh-link-pihak-ketiga.com/download/ninja-school-3.jar"
 description: >

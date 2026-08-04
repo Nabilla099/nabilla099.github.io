@@ -5,7 +5,8 @@ date: 2026-06-10
 category: "Open World"
 resolution: "240x320"
 size: "2.4 MB"
-version: "1.1"
+vendor: "Rockstar Games"
+translator: "Nabilla-Khanza"
 screenshot: "https://i.imgur.com/CONTOH-SCREENSHOT-3.jpg"
 download: "https://contoh-link-pihak-ketiga.com/download/gta-china-town.jar"
 description: >

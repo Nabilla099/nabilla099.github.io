@@ -12,7 +12,8 @@ read -p "Judul game        : " TITLE
 read -p "Kategori (mis. RPG, Racing, Action) : " CATEGORY
 read -p "Resolusi (mis. 240x320)   : " RESOLUTION
 read -p "Ukuran file (mis. 1.2 MB) : " SIZE
-read -p "Versi (mis. 1.0)   : " VERSION
+read -p "Vendor / studio pembuat (mis. Gameloft) : " VENDOR
+read -p "Nama translator : " TRANSLATOR
 read -p "Link screenshot (boleh lebih dari 1, pisahkan pakai koma) : " SCREENSHOTS_RAW
 read -p "Link download (URL pihak ketiga) : " DOWNLOAD
 
@@ -52,7 +53,8 @@ date: ${TODAY}
 category: "${CATEGORY}"
 resolution: "${RESOLUTION}"
 size: "${SIZE}"
-version: "${VERSION}"
+vendor: "${VENDOR}"
+translator: "${TRANSLATOR}"
 screenshot: "${SCREENSHOT}"
 screenshots:
 $(echo -e "$SCREENSHOTS_YAML")download: "${DOWNLOAD}"

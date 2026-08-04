@@ -5,9 +5,9 @@ title: Beranda
 <section class="hero">
   <div class="wrap hero-inner">
     <div class="hero-copy">
-      <span class="eyebrow">Java • J2ME • Retro Loader</span>
-      <h1>Etalase game <span>Java J2ME</span> jadul, dikemas rapi</h1>
-      <p class="lead">Screenshot lengkap, deskripsi jelas, dan link download dari pihak ketiga — tinggal pilih game, cek detailnya, lalu unduh.</p>
+      <span class="eyebrow">Java • J2ME • Terjemahan Indonesia</span>
+      <h1>Game Java J2ME, sudah <span>diterjemahkan</span> ke Bahasa Indonesia</h1>
+      <p class="lead">Kumpulan game Java yang aku terjemahkan sendiri, lengkap dengan screenshot dan deskripsi tiap game — biar makin nyaman dimainkan tanpa perlu translate manual lagi.</p>
 
       <div class="hero-search">
         <input type="search" id="game-search" placeholder="Cari game, misalnya: racing, ninja, RPG...">
@@ -15,8 +15,8 @@ title: Beranda
 
       <div class="hero-stats">
         <div class="stat"><strong>{{ site.games | size }}+</strong><span>Game tersedia</span></div>
-        <div class="stat"><strong>100%</strong><span>Gratis</span></div>
-        <div class="stat"><strong>Update</strong><span>Rutin tiap minggu</span></div>
+        <div class="stat"><strong>100%</strong><span>Bahasa Indonesia</span></div>
+        <div class="stat"><strong>{{ site.games | map: "category" | uniq | compact | size }}</strong><span>Kategori game</span></div>
       </div>
     </div>
 
@@ -54,7 +54,7 @@ title: Beranda
           <img src="{{ game.screenshot }}" alt="Screenshot {{ game.title }}" loading="lazy">
         </div>
         {% if game.screenshots and game.screenshots.size > 1 %}
-        <span class="multi-badge">📷 {{ game.screenshots.size }}</span>
+        <span class="multi-badge">{{ game.screenshots.size }} Foto</span>
         {% endif %}
       </div>
       <div class="body">
@@ -74,13 +74,3 @@ title: Beranda
     Game tidak ditemukan. Coba kata kunci atau kategori lain.
   </div>
 </div>
-
-<section class="cta-block" id="request">
-  <div class="wrap cta-inner">
-    <div>
-      <h2>Punya rekomendasi game J2ME?</h2>
-      <p>Kirim judul game yang kamu cari, nanti kita tambahkan ke katalog Kh-Store.</p>
-    </div>
-    <a class="btn btn-soft" href="mailto:kontak@kh-store.example?subject=Request%20Game%20J2ME">✉ Request Game</a>
-  </div>
-</section>

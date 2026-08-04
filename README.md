@@ -5,7 +5,7 @@ Landing page GitHub Pages buat sharing koleksi game Java J2ME. Setiap game disim
 ## Fitur
 
 - Tema pink gradient soft white, **tanpa warna biru sama sekali** (termasuk saat klik/focus tombol).
-- Nav profesional dengan menu (Beranda, Kategori, Tentang, Request Game) + menu mobile (hamburger).
+- Nav profesional dengan menu (Beranda, Kategori) + menu mobile (hamburger).
 - Hero dengan statistik, search bar terintegrasi, dan filter kategori (chip).
 - Setiap game = 1 file markdown di folder `_games/`. Tambah file baru → otomatis muncul di grid.
 - Halaman detail per game: **galeri screenshot model carousel (geser) ala Instagram**, deskripsi, resolusi, tombol download, dan rekomendasi game lain.
@@ -70,7 +70,8 @@ date: 2026-08-03
 category: "Action"
 resolution: "240x320"
 size: "1.5 MB"
-version: "1.0"
+vendor: "Nama Studio/Vendor"
+translator: "Nama Kamu"
 screenshot: "https://link-gambar-screenshot-1.jpg"
 screenshots:
   - "https://link-gambar-screenshot-1.jpg"

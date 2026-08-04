@@ -5,7 +5,8 @@ date: 2026-08-01
 category: "Racing"
 resolution: "240x320"
 size: "1.2 MB"
-version: "1.0"
+vendor: "Gameloft"
+translator: "Nabilla-Khanza"
 screenshot: "https://i.imgur.com/CONTOH-SCREENSHOT-1.jpg"
 screenshots:
   - "https://i.imgur.com/CONTOH-SCREENSHOT-1.jpg"
