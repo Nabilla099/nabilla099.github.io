@@ -1,0 +1,36 @@
+---
+layout: default
+---
+<div class="wrap game-detail">
+
+  <a class="back-link" href="{{ '/' | relative_url }}">&larr; Kembali ke daftar game</a>
+
+  <div class="detail-grid">
+    <div class="detail-frame">
+      <div class="screen">
+        <img src="{{ page.screenshot }}" alt="Screenshot {{ page.title }}" loading="lazy">
+      </div>
+    </div>
+
+    <div class="detail-info">
+      {% if page.category %}<div class="eyebrow">{{ page.category }}</div>{% endif %}
+      <h1>{{ page.title }}</h1>
+
+      <div class="spec-list">
+        {% if page.resolution %}<span class="chip">Res {{ page.resolution }}</span>{% endif %}
+        {% if page.size %}<span class="chip">{{ page.size }}</span>{% endif %}
+        {% if page.version %}<span class="chip">v{{ page.version }}</span>{% endif %}
+      </div>
+
+      <p class="desc">{{ page.description }}</p>
+
+      <div class="download-row">
+        <button class="btn btn-download" data-url="{{ page.download }}">
+          ⬇ Download Game
+        </button>
+      </div>
+      <p class="hint">* Tekan biasa untuk membuka link download. Link tidak bisa disalin lewat tekan lama.</p>
+    </div>
+  </div>
+
+</div>

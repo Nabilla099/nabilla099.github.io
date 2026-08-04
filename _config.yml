@@ -1,0 +1,31 @@
+title: J2ME Vault
+description: "Koleksi game Java J2ME jadul — mainkan lagi masa kecilmu di HP layar kecil."
+baseurl: ""
+url: ""
+
+# Ganti "username" dengan username GitHub kamu, dan "repo" dengan nama repo-nya
+# kalau situs ini dipasang di https://username.github.io/repo/
+# Kalau situs ini dipasang langsung di https://username.github.io (repo bernama username.github.io),
+# baseurl DIKOSONGKAN seperti di atas.
+
+collections:
+  games:
+    output: true
+    permalink: /game/:slug/
+
+defaults:
+  - scope:
+      path: ""
+      type: "games"
+    values:
+      layout: "game"
+
+markdown: kramdown
+plugins:
+  - jekyll-sitemap
+
+exclude:
+  - README.md
+  - add_game.sh
+  - Gemfile
+  - Gemfile.lock

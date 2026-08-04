@@ -1,1 +1,115 @@
-# nabilla099.github.io
+# J2ME Vault 🎮
+
+Landing page GitHub Pages buat sharing koleksi game Java J2ME. Setiap game disimpan sebagai file `.md`, tinggal tambah file baru dan otomatis muncul di halaman utama + punya halaman detail sendiri.
+
+## Fitur
+
+- Tema pink gradient soft white, **tanpa warna biru sama sekali** (termasuk saat klik/focus tombol).
+- Setiap game = 1 file markdown di folder `_games/`. Tambah file baru → otomatis muncul di grid.
+- Halaman detail per game: screenshot, deskripsi, resolusi, tombol download.
+- Tombol dengan animasi gelombang otomatis + efek ripple saat diklik.
+- Tombol download bukan link biasa → **tidak bisa disalin lewat tekan lama** (long-press) di HP.
+- Responsif (mobile, tablet, desktop).
+- Ada pencarian game sederhana di halaman utama.
+
+## 1. Setup awal (sekali saja)
+
+1. Buat repo baru di GitHub, namakan `username.github.io` (ganti `username` sesuai akun kamu) kalau mau di root domain, atau bebas namanya kalau mau di subfolder (`username.github.io/nama-repo`).
+2. Kalau pakai subfolder, buka `_config.yml` dan isi `baseurl: "/nama-repo"`.
+3. Upload semua isi folder ini ke repo tersebut.
+4. Di GitHub: **Settings → Pages → Source: Deploy from branch → branch `main` / folder `/ (root)`**.
+5. Tunggu 1-2 menit, situs bisa diakses di `https://username.github.io/`.
+
+## 2. Install Git di Termux (sekali saja)
+
+```bash
+pkg update && pkg upgrade -y
+pkg install git -y
+git config --global user.name "Nama Kamu"
+git config --global user.email "email@kamu.com"
+```
+
+Lalu clone repo kamu:
+
+```bash
+git clone https://github.com/username/username.github.io.git
+cd username.github.io
+```
+
+## 3. Cara nambah game baru (via Termux)
+
+Paling gampang, pakai script otomatis yang sudah disediakan:
+
+```bash
+bash add_game.sh
+```
+
+Script akan menanyakan:
+- Judul game
+- Kategori
+- Resolusi (mis. `240x320`)
+- Ukuran file
+- Versi
+- **Link screenshot** (upload dulu screenshot ke Imgur/Postimg/dll, lalu tempel link gambarnya)
+- **Link download** (link pihak ketiga tempat file `.jar`/`.jad` disimpan)
+- Deskripsi game
+
+Setelah itu file `_games/nama-slug.md` otomatis dibuat, dan script akan tanya apakah mau langsung `git push`. Kalau ya, situs langsung ter-update otomatis dalam 1-2 menit.
+
+### Cara manual (tanpa script)
+
+Bikin file baru di `_games/judul-game.md`, isinya:
+
+```markdown
+---
+title: "Judul Game"
+slug: "judul-game"
+date: 2026-08-03
+category: "Action"
+resolution: "240x320"
+size: "1.5 MB"
+version: "1.0"
+screenshot: "https://link-gambar-screenshot.jpg"
+download: "https://link-download-pihak-ketiga.com/file.jar"
+description: >
+  Deskripsi singkat tentang game ini, ceritanya apa, gameplay-nya seperti apa.
+---
+```
+
+Lalu:
+
+```bash
+git add _games/judul-game.md
+git commit -m "Tambah game: Judul Game"
+git push
+```
+
+## 4. Struktur folder
+
+```
+j2me-vault/
+├── _config.yml          # konfigurasi situs
+├── _layouts/
+│   ├── default.html     # layout dasar (header, footer)
+│   └── game.html        # layout halaman detail game
+├── _games/               # SEMUA game ada di sini (1 file = 1 game)
+│   ├── racing-fever-2.md
+│   ├── ninja-school-3.md
+│   └── gta-china-town.md
+├── assets/
+│   ├── css/style.css     # tema pink gradient + animasi tombol
+│   └── js/main.js        # ripple effect + anti-copy-link
+├── index.html             # halaman utama (grid otomatis)
+├── add_game.sh            # script bantu nambah game via Termux
+└── README.md
+```
+
+## 5. Ganti nama/branding
+
+Buka `_config.yml`, ganti `title` dan `description` sesuai selera kamu. Nama "J2ME Vault" di header ada di `_layouts/default.html`, bagian `<a class="brand">`.
+
+## 6. Catatan penting
+
+- Semua link download & screenshot adalah **link pihak ketiga** — situs ini cuma menampilkan daftar dan deskripsi, tidak menghosting file game.
+- Gambar screenshot sebaiknya rasio landscape (4:3) biar pas dengan bingkai "layar HP" di desain.
+- File contoh (`racing-fever-2.md`, dll) boleh dihapus/diganti, itu cuma contoh format.

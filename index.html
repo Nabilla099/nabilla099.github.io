@@ -1,0 +1,41 @@
+---
+layout: default
+title: Beranda
+---
+<div class="wrap hero">
+  <span class="eyebrow">Java • J2ME • Retro Loader</span>
+  <h1>Mainkan lagi game <span>J2ME jadul</span> favoritmu</h1>
+  <p class="lead">Koleksi game Java untuk HP jadul, lengkap dengan screenshot, deskripsi, dan link download dari pihak ketiga. Tinggal pilih, lihat detailnya, lalu unduh.</p>
+</div>
+
+<div class="wrap toolbar">
+  <input type="search" id="game-search" placeholder="Cari game... (misal: racing, RPG)">
+</div>
+
+<div class="wrap">
+  <div class="game-grid">
+    {% assign games = site.games | sort: 'date' | reverse %}
+    {% for game in games %}
+    <a class="game-card" href="{{ game.url | relative_url }}" data-search="{{ game.title }} {{ game.category }}">
+      <div class="phone-frame">
+        <div class="screen">
+          <img src="{{ game.screenshot }}" alt="Screenshot {{ game.title }}" loading="lazy">
+        </div>
+      </div>
+      <div class="body">
+        <h3>{{ game.title }}</h3>
+        <div class="meta">
+          {% if game.resolution %}<span>{{ game.resolution }}</span>{% endif %}
+          {% if game.category %}<span>{{ game.category }}</span>{% endif %}
+        </div>
+        <p class="desc">{{ game.description }}</p>
+        <span class="open-link">Lihat detail →</span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+
+  <div id="empty-state" class="empty-state" style="display:none;">
+    Game tidak ditemukan. Coba kata kunci lain.
+  </div>
+</div>
