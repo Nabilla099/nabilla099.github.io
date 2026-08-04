@@ -6,10 +6,26 @@ layout: default
   <a class="back-link" href="{{ '/' | relative_url }}">&larr; Kembali ke daftar game</a>
 
   <div class="detail-grid">
-    <div class="detail-frame">
-      <div class="screen">
-        <img src="{{ page.screenshot }}" alt="Screenshot {{ page.title }}" loading="lazy">
+    <div class="detail-gallery">
+      {% assign shots = page.screenshots | default: nil %}
+      <div class="ig-carousel" id="ig-carousel">
+        <div class="ig-track">
+          {% if shots %}
+            {% for shot in shots %}
+              <div class="ig-slide"><img src="{{ shot }}" alt="Screenshot {{ page.title }} {{ forloop.index }}" loading="lazy"></div>
+            {% endfor %}
+          {% else %}
+            <div class="ig-slide"><img src="{{ page.screenshot }}" alt="Screenshot {{ page.title }}" loading="lazy"></div>
+          {% endif %}
+        </div>
       </div>
+      {% if shots and shots.size > 1 %}
+      <div class="ig-dots">
+        {% for shot in shots %}
+          <span class="ig-dot {% if forloop.first %}active{% endif %}"></span>
+        {% endfor %}
+      </div>
+      {% endif %}
     </div>
 
     <div class="detail-info">
@@ -17,9 +33,9 @@ layout: default
       <h1>{{ page.title }}</h1>
 
       <div class="spec-list">
-        {% if page.resolution %}<span class="chip">Res {{ page.resolution }}</span>{% endif %}
-        {% if page.size %}<span class="chip">{{ page.size }}</span>{% endif %}
-        {% if page.version %}<span class="chip">v{{ page.version }}</span>{% endif %}
+        {% if page.resolution %}<span class="chip">📐 {{ page.resolution }}</span>{% endif %}
+        {% if page.size %}<span class="chip">💾 {{ page.size }}</span>{% endif %}
+        {% if page.version %}<span class="chip">🔖 v{{ page.version }}</span>{% endif %}
       </div>
 
       <p class="desc">{{ page.description }}</p>
@@ -29,7 +45,29 @@ layout: default
           ⬇ Download Game
         </button>
       </div>
-      <p class="hint">* Tekan biasa untuk membuka link download. Link tidak bisa disalin lewat tekan lama.</p>
+    </div>
+  </div>
+
+  <div class="related-block">
+    <h3>Game lainnya</h3>
+    <div class="game-grid game-grid-compact">
+      {% assign others = site.games | where_exp: "g", "g.url != page.url" | sample: 3 %}
+      {% for game in others %}
+      <a class="game-card" href="{{ game.url | relative_url }}">
+        <div class="phone-frame">
+          <div class="screen">
+            <img src="{{ game.screenshot }}" alt="Screenshot {{ game.title }}" loading="lazy">
+          </div>
+        </div>
+        <div class="body">
+          <h3>{{ game.title }}</h3>
+          <div class="meta">
+            {% if game.resolution %}<span>{{ game.resolution }}</span>{% endif %}
+            {% if game.category %}<span>{{ game.category }}</span>{% endif %}
+          </div>
+        </div>
+      </a>
+      {% endfor %}
     </div>
   </div>
 

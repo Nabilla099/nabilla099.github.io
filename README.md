@@ -1,16 +1,18 @@
-# J2ME Vault 🎮
+# Kh-Store 🎮
 
 Landing page GitHub Pages buat sharing koleksi game Java J2ME. Setiap game disimpan sebagai file `.md`, tinggal tambah file baru dan otomatis muncul di halaman utama + punya halaman detail sendiri.
 
 ## Fitur
 
 - Tema pink gradient soft white, **tanpa warna biru sama sekali** (termasuk saat klik/focus tombol).
+- Nav profesional dengan menu (Beranda, Kategori, Tentang, Request Game) + menu mobile (hamburger).
+- Hero dengan statistik, search bar terintegrasi, dan filter kategori (chip).
 - Setiap game = 1 file markdown di folder `_games/`. Tambah file baru → otomatis muncul di grid.
-- Halaman detail per game: screenshot, deskripsi, resolusi, tombol download.
+- Halaman detail per game: **galeri screenshot model carousel (geser) ala Instagram**, deskripsi, resolusi, tombol download, dan rekomendasi game lain.
 - Tombol dengan animasi gelombang otomatis + efek ripple saat diklik.
-- Tombol download bukan link biasa → **tidak bisa disalin lewat tekan lama** (long-press) di HP.
-- Responsif (mobile, tablet, desktop).
-- Ada pencarian game sederhana di halaman utama.
+- Tombol download bukan link biasa → tidak bisa disalin lewat tekan lama (long-press) di HP.
+- Responsif penuh (mobile, tablet, desktop).
+- Pencarian + filter kategori di halaman utama.
 
 ## 1. Setup awal (sekali saja)
 
@@ -69,12 +71,18 @@ category: "Action"
 resolution: "240x320"
 size: "1.5 MB"
 version: "1.0"
-screenshot: "https://link-gambar-screenshot.jpg"
+screenshot: "https://link-gambar-screenshot-1.jpg"
+screenshots:
+  - "https://link-gambar-screenshot-1.jpg"
+  - "https://link-gambar-screenshot-2.jpg"
+  - "https://link-gambar-screenshot-3.jpg"
 download: "https://link-download-pihak-ketiga.com/file.jar"
 description: >
   Deskripsi singkat tentang game ini, ceritanya apa, gameplay-nya seperti apa.
 ---
 ```
+
+`screenshots` boleh diisi lebih dari satu gambar — di halaman detail game, semua gambar itu tampil sebagai galeri geser (carousel) seperti postingan Instagram. Kalau cuma punya 1 screenshot, isi `screenshot` saja, `screenshots` boleh dihapus.
 
 Lalu:
 
@@ -87,7 +95,7 @@ git push
 ## 4. Struktur folder
 
 ```
-j2me-vault/
+kh-store/
 ├── _config.yml          # konfigurasi situs
 ├── _layouts/
 │   ├── default.html     # layout dasar (header, footer)
@@ -106,7 +114,7 @@ j2me-vault/
 
 ## 5. Ganti nama/branding
 
-Buka `_config.yml`, ganti `title` dan `description` sesuai selera kamu. Nama "J2ME Vault" di header ada di `_layouts/default.html`, bagian `<a class="brand">`.
+Buka `_config.yml`, ganti `title` dan `description` sesuai selera kamu. Nama "Kh-Store" di header ada di `_layouts/default.html`, bagian `<a class="brand">`.
 
 ## 6. Catatan penting
 

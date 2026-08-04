@@ -1,20 +1,32 @@
 #!/data/data/com.termux/files/usr/bin/bash
 # =========================================================
-# add_game.sh — Tambah game J2ME baru ke J2ME Vault
+# add_game.sh — Tambah game J2ME baru ke Kh-Store
 # Pakai di Termux, jalankan dari dalam folder repo:
 #   bash add_game.sh
 # =========================================================
 
 set -e
 
-echo "=== Tambah Game Baru ke J2ME Vault ==="
+echo "=== Tambah Game Baru ke Kh-Store ==="
 read -p "Judul game        : " TITLE
 read -p "Kategori (mis. RPG, Racing, Action) : " CATEGORY
 read -p "Resolusi (mis. 240x320)   : " RESOLUTION
 read -p "Ukuran file (mis. 1.2 MB) : " SIZE
 read -p "Versi (mis. 1.0)   : " VERSION
-read -p "Link screenshot (URL gambar) : " SCREENSHOT
+read -p "Link screenshot (boleh lebih dari 1, pisahkan pakai koma) : " SCREENSHOTS_RAW
 read -p "Link download (URL pihak ketiga) : " DOWNLOAD
+
+# Screenshot pertama dipakai sebagai thumbnail utama
+SCREENSHOT=$(echo "$SCREENSHOTS_RAW" | cut -d',' -f1 | xargs)
+
+# Susun daftar screenshot (YAML list) untuk carousel ala Instagram
+SCREENSHOTS_YAML=""
+IFS=',' read -ra SHOT_ARR <<< "$SCREENSHOTS_RAW"
+for shot in "${SHOT_ARR[@]}"; do
+  shot_trimmed=$(echo "$shot" | xargs)
+  [ -z "$shot_trimmed" ] && continue
+  SCREENSHOTS_YAML="${SCREENSHOTS_YAML}  - \"${shot_trimmed}\"\n"
+done
 echo "Deskripsi game (tekan Enter 2x kalau sudah selesai):"
 DESCRIPTION=""
 while IFS= read -r line; do
@@ -42,7 +54,8 @@ resolution: "${RESOLUTION}"
 size: "${SIZE}"
 version: "${VERSION}"
 screenshot: "${SCREENSHOT}"
-download: "${DOWNLOAD}"
+screenshots:
+$(echo -e "$SCREENSHOTS_YAML")download: "${DOWNLOAD}"
 description: >
   ${DESCRIPTION}
 ---

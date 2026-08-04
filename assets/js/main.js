@@ -9,7 +9,68 @@ document.addEventListener("DOMContentLoaded", () => {
   initRipple();
   initDownloadButtons();
   initSearch();
+  initMobileMenu();
+  initCategoryFilter();
+  initCarousel();
 });
+
+/* ---------- Menu mobile (hamburger) ---------- */
+function initMobileMenu() {
+  const toggle = document.getElementById("menu-toggle");
+  const nav = document.getElementById("site-nav");
+  if (!toggle || !nav) return;
+
+  toggle.addEventListener("click", () => nav.classList.toggle("open"));
+  nav.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => nav.classList.remove("open"))
+  );
+}
+
+/* ---------- Filter kategori (chip) di beranda ---------- */
+function initCategoryFilter() {
+  const chips = document.querySelectorAll(".chip-btn");
+  const cards = document.querySelectorAll(".game-card[data-category]");
+  const empty = document.getElementById("empty-state");
+  if (chips.length === 0) return;
+
+  chips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      chips.forEach((c) => c.classList.remove("active"));
+      chip.classList.add("active");
+      const filter = chip.getAttribute("data-filter");
+      let visible = 0;
+
+      cards.forEach((card) => {
+        const match = filter === "all" || card.getAttribute("data-category") === filter;
+        card.style.display = match ? "" : "none";
+        if (match) visible++;
+      });
+
+      if (empty) empty.style.display = visible === 0 ? "block" : "none";
+
+      const search = document.getElementById("game-search");
+      if (search) search.value = "";
+    });
+  });
+}
+
+/* ---------- Carousel screenshot ala Instagram (dots sync) ---------- */
+function initCarousel() {
+  const track = document.querySelector(".ig-track");
+  const dots = document.querySelectorAll(".ig-dot");
+  if (!track || dots.length === 0) return;
+
+  track.addEventListener("scroll", () => {
+    const index = Math.round(track.scrollLeft / track.clientWidth);
+    dots.forEach((d, i) => d.classList.toggle("active", i === index));
+  });
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => {
+      track.scrollTo({ left: i * track.clientWidth, behavior: "smooth" });
+    });
+  });
+}
 
 /* ---------- 1) Ripple effect untuk semua .btn ---------- */
 function initRipple() {
@@ -75,6 +136,12 @@ function initSearch() {
   input.addEventListener("input", () => {
     const q = input.value.trim().toLowerCase();
     let visibleCount = 0;
+
+    if (q) {
+      document.querySelectorAll(".chip-btn").forEach((c) => c.classList.remove("active"));
+      const allChip = document.querySelector('.chip-btn[data-filter="all"]');
+      if (allChip) allChip.classList.add("active");
+    }
 
     cards.forEach((card) => {
       const haystack = (card.getAttribute("data-search") || "").toLowerCase();

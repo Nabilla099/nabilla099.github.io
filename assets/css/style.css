@@ -304,3 +304,179 @@ footer.site-footer{
   .btn::before{ animation: none; }
   html{ scroll-behavior: auto; }
 }
+
+/* =========================================================
+   KH-STORE — Tambahan v2: nav profesional, hero, filter,
+   carousel screenshot ala Instagram
+   ========================================================= */
+
+/* ---------- Header / nav ---------- */
+.header-inner{ display:flex; align-items:center; justify-content:space-between; gap: 20px; }
+
+.brand{ display:flex; align-items:center; gap:10px; }
+.brand-mark{
+  width: 38px; height: 38px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+  color: var(--white); font-family: var(--font-display); font-weight: 800;
+  display:flex; align-items:center; justify-content:center; font-size: 1.05rem;
+  box-shadow: 0 6px 14px -6px var(--shadow-pink);
+}
+.brand-text{
+  font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; color: var(--rose-ink);
+}
+
+.site-nav{ display:flex; align-items:center; gap: 4px; }
+.site-nav a{
+  padding: 9px 16px; border-radius: 999px; font-weight: 700; font-size: .92rem;
+  color: var(--rose-ink-soft); transition: background .2s ease, color .2s ease;
+}
+.site-nav a:hover, .site-nav a.active{ background: var(--pink-100); color: var(--pink-700); }
+.site-nav a.nav-cta{
+  background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+  color: var(--white); margin-left: 6px;
+}
+.site-nav a.nav-cta:hover{ color: var(--white); filter: brightness(1.05); }
+
+.menu-toggle{
+  display:none; flex-direction:column; justify-content:center; gap:5px;
+  width: 40px; height: 40px; border:none; background: var(--pink-100);
+  border-radius: 10px; cursor:pointer;
+}
+.menu-toggle span{ width: 18px; height: 2px; background: var(--pink-700); margin: 0 auto; border-radius: 2px; }
+
+@media (max-width: 860px){
+  .menu-toggle{ display:flex; }
+  .site-nav{
+    position: fixed; inset: 70px 14px auto 14px;
+    background: var(--white); border-radius: var(--radius-lg);
+    flex-direction: column; align-items: stretch; gap: 4px; padding: 10px;
+    box-shadow: 0 20px 40px -14px var(--shadow-pink); border: 1px solid var(--pink-100);
+    transform: translateY(-12px); opacity: 0; pointer-events:none;
+    transition: transform .22s ease, opacity .22s ease;
+  }
+  .site-nav.open{ transform: translateY(0); opacity: 1; pointer-events:auto; }
+  .site-nav a{ text-align:center; }
+}
+
+/* ---------- Hero v2 ---------- */
+.hero{ padding: 56px 0 20px; overflow:hidden; }
+.hero-inner{ display:grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items:center; }
+@media (max-width: 900px){ .hero-inner{ grid-template-columns: 1fr; } }
+
+.hero-copy h1{
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(2rem, 4.4vw, 3rem); margin: 14px 0; color: var(--rose-ink);
+}
+.hero-copy h1 span{
+  background: linear-gradient(135deg, var(--pink-500), var(--pink-700));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero-copy .lead{ color: var(--rose-ink-soft); font-size: 1.05rem; max-width: 480px; }
+
+.hero-search{ margin: 24px 0 20px; }
+.hero-search input{
+  width: 100%; max-width: 420px; font-family: var(--font-body);
+  border: 2px solid var(--pink-200); background: var(--white);
+  border-radius: 999px; padding: 15px 22px; font-size: .98rem; color: var(--rose-ink);
+  box-shadow: 0 10px 24px -16px var(--shadow-pink);
+}
+.hero-search input:focus{ border-color: var(--pink-400); outline:none; }
+
+.hero-stats{ display:flex; gap: 26px; flex-wrap:wrap; }
+.hero-stats .stat{ display:flex; flex-direction:column; }
+.hero-stats strong{ font-family: var(--font-display); font-size: 1.3rem; color: var(--pink-700); }
+.hero-stats span{ font-size: .78rem; color: var(--rose-ink-soft); font-family: var(--font-mono); }
+
+.hero-visual{ position:relative; height: 320px; display:flex; align-items:center; justify-content:center; }
+.stack-phone{
+  position:absolute; width: 150px; height: 260px; border-radius: 26px;
+  background: linear-gradient(160deg, var(--white), var(--pink-100));
+  border: 3px solid var(--white); box-shadow: 0 24px 50px -20px var(--shadow-pink);
+}
+.stack-phone::before{
+  content:""; position:absolute; inset: 14px; border-radius: 14px;
+  background: linear-gradient(160deg, var(--pink-200), var(--pink-50));
+}
+.phone-a{ transform: rotate(-14deg) translateX(-70px); z-index:1; }
+.phone-b{ transform: rotate(3deg); z-index:2; }
+.phone-c{ transform: rotate(16deg) translateX(70px); z-index:1; }
+@media (max-width: 900px){ .hero-visual{ height: 220px; } .stack-phone{ width:110px; height:190px; } }
+
+/* ---------- Section headers & chip filter ---------- */
+.section-head{
+  display:flex; align-items:baseline; justify-content:space-between; gap: 12px;
+  margin: 40px 0 14px;
+}
+.section-head h2{ font-family: var(--font-display); font-size: 1.4rem; color: var(--rose-ink); margin:0; }
+.section-sub{ font-family: var(--font-mono); font-size: .8rem; color: var(--rose-ink-soft); }
+
+.chip-filter{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom: 10px; }
+.chip-btn{
+  font-family: var(--font-body); font-weight: 700; font-size: .85rem;
+  padding: 9px 18px; border-radius: 999px; border: 2px solid var(--pink-200);
+  background: var(--white); color: var(--rose-ink-soft); cursor:pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.chip-btn:hover{ border-color: var(--pink-400); color: var(--pink-700); }
+.chip-btn.active{
+  background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+  color: var(--white); border-color: transparent;
+}
+
+/* multi-photo badge on card thumbnail */
+.multi-badge{
+  position:absolute; top: 22px; right: 22px;
+  background: rgba(107,53,80,0.75); color: var(--white);
+  font-family: var(--font-mono); font-size: .7rem; padding: 3px 9px; border-radius: 999px;
+}
+
+.game-grid-compact{ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+
+/* ---------- CTA block ---------- */
+.cta-block{ padding: 20px 0 70px; }
+.cta-inner{
+  background: linear-gradient(135deg, var(--pink-100), var(--white));
+  border: 1px solid var(--pink-200); border-radius: var(--radius-lg);
+  padding: 34px 30px; display:flex; align-items:center; justify-content:space-between;
+  gap: 20px; flex-wrap:wrap;
+}
+.cta-inner h2{ font-family: var(--font-display); margin: 0 0 6px; font-size: 1.3rem; color: var(--rose-ink); }
+.cta-inner p{ margin:0; color: var(--rose-ink-soft); }
+
+/* ---------- Simple page (Tentang) ---------- */
+.simple-page{ padding: 60px 0 80px; max-width: 680px; }
+.simple-page h1{ font-family: var(--font-display); font-size: 2.1rem; color: var(--rose-ink); margin: 10px 0 20px; }
+.simple-page .lead{ margin-bottom: 16px; color: var(--rose-ink-soft); font-size: 1.02rem; }
+.simple-page .btn{ margin-top: 20px; }
+
+/* ---------- Instagram-style screenshot carousel ---------- */
+.detail-gallery{ display:flex; flex-direction:column; gap: 12px; }
+.ig-carousel{
+  border-radius: var(--radius-lg); overflow:hidden; border: 1px solid var(--pink-100);
+  box-shadow: 0 14px 30px -14px var(--shadow-pink); background: var(--pink-50);
+}
+.ig-track{
+  display:flex; overflow-x:auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.ig-track::-webkit-scrollbar{ display:none; }
+.ig-slide{ min-width:100%; scroll-snap-align:center; aspect-ratio: 4/3; }
+.ig-slide img{ width:100%; height:100%; object-fit: cover; }
+.ig-dots{ display:flex; justify-content:center; gap: 7px; }
+.ig-dot{
+  width: 7px; height: 7px; border-radius: 50%; background: var(--pink-200);
+  transition: background .2s ease, transform .2s ease;
+}
+.ig-dot.active{ background: var(--pink-600); transform: scale(1.3); }
+
+.related-block{ margin-top: 60px; }
+.related-block h3{ font-family: var(--font-display); font-size: 1.2rem; color: var(--rose-ink); margin-bottom: 16px; }
+
+/* ---------- Footer v2 ---------- */
+.footer-grid{ display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 30px; text-align:left; }
+@media (max-width: 700px){ .footer-grid{ grid-template-columns: 1fr; } }
+.footer-brand{ margin-bottom: 10px; }
+.footer-grid h4{ font-family: var(--font-display); font-size: .95rem; color: var(--rose-ink); margin: 0 0 10px; }
+.footer-grid a{ display:block; color: var(--rose-ink-soft); font-size: .88rem; margin-bottom: 6px; }
+.footer-grid a:hover{ color: var(--pink-600); }
+.footer-grid p{ font-size: .85rem; color: var(--rose-ink-soft); margin: 0; }

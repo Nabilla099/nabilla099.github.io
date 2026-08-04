@@ -2,25 +2,60 @@
 layout: default
 title: Beranda
 ---
-<div class="wrap hero">
-  <span class="eyebrow">Java • J2ME • Retro Loader</span>
-  <h1>Mainkan lagi game <span>J2ME jadul</span> favoritmu</h1>
-  <p class="lead">Koleksi game Java untuk HP jadul, lengkap dengan screenshot, deskripsi, dan link download dari pihak ketiga. Tinggal pilih, lihat detailnya, lalu unduh.</p>
-</div>
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow">Java • J2ME • Retro Loader</span>
+      <h1>Etalase game <span>Java J2ME</span> jadul, dikemas rapi</h1>
+      <p class="lead">Screenshot lengkap, deskripsi jelas, dan link download dari pihak ketiga — tinggal pilih game, cek detailnya, lalu unduh.</p>
 
-<div class="wrap toolbar">
-  <input type="search" id="game-search" placeholder="Cari game... (misal: racing, RPG)">
-</div>
+      <div class="hero-search">
+        <input type="search" id="game-search" placeholder="Cari game, misalnya: racing, ninja, RPG...">
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat"><strong>{{ site.games | size }}+</strong><span>Game tersedia</span></div>
+        <div class="stat"><strong>100%</strong><span>Gratis</span></div>
+        <div class="stat"><strong>Update</strong><span>Rutin tiap minggu</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="stack-phone phone-a"></div>
+      <div class="stack-phone phone-b"></div>
+      <div class="stack-phone phone-c"></div>
+    </div>
+  </div>
+</section>
 
 <div class="wrap">
+  <div class="section-head" id="kategori">
+    <h2>Kategori</h2>
+  </div>
+  <div class="chip-filter" id="chip-filter">
+    <button class="chip-btn active" data-filter="all">Semua</button>
+    {% assign cats = site.games | map: "category" | uniq | sort %}
+    {% for c in cats %}
+      {% if c %}<button class="chip-btn" data-filter="{{ c }}">{{ c }}</button>{% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="section-head">
+    <h2>Koleksi Game</h2>
+    <span class="section-sub">{{ site.games | size }} game ditemukan</span>
+  </div>
+
   <div class="game-grid">
     {% assign games = site.games | sort: 'date' | reverse %}
     {% for game in games %}
-    <a class="game-card" href="{{ game.url | relative_url }}" data-search="{{ game.title }} {{ game.category }}">
+    <a class="game-card" href="{{ game.url | relative_url }}" data-search="{{ game.title }} {{ game.category }}" data-category="{{ game.category }}">
       <div class="phone-frame">
         <div class="screen">
           <img src="{{ game.screenshot }}" alt="Screenshot {{ game.title }}" loading="lazy">
         </div>
+        {% if game.screenshots and game.screenshots.size > 1 %}
+        <span class="multi-badge">📷 {{ game.screenshots.size }}</span>
+        {% endif %}
       </div>
       <div class="body">
         <h3>{{ game.title }}</h3>
@@ -36,6 +71,16 @@ title: Beranda
   </div>
 
   <div id="empty-state" class="empty-state" style="display:none;">
-    Game tidak ditemukan. Coba kata kunci lain.
+    Game tidak ditemukan. Coba kata kunci atau kategori lain.
   </div>
 </div>
+
+<section class="cta-block" id="request">
+  <div class="wrap cta-inner">
+    <div>
+      <h2>Punya rekomendasi game J2ME?</h2>
+      <p>Kirim judul game yang kamu cari, nanti kita tambahkan ke katalog Kh-Store.</p>
+    </div>
+    <a class="btn btn-soft" href="mailto:kontak@kh-store.example?subject=Request%20Game%20J2ME">✉ Request Game</a>
+  </div>
+</section>
