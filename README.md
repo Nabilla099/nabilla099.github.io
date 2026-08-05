@@ -1,36 +1,70 @@
-# Profil Nabilla Khanza
+# Nabilla Khanza — Halaman Pribadi
 
-<div align="center" style="background-color: #FFB6C1; padding: 25px 20px; border-radius: 12px; border: 3px solid #FF69B4; margin-bottom: 30px;">
-  <h2 style="color: #8B0000; margin: 0 0 8px 0; font-family: Arial, sans-serif;">✨ Nabilla Khanza ✨</h2>
-  <p style="font-size: 1.1em; color: #4A0000; margin: 0 0 5px 0;">
-    <strong>Temukan Saya di Facebook</strong>
-  </p>
-  <p style="margin: 5px 0;">
-    <a href="https://www.facebook.com/profile.php?id=61592014025326" style="color: #8B0000; font-weight: bold; font-size: 1.1em; text-decoration: underline; background-color: #FFD1DC; padding: 5px 12px; border-radius: 20px;">
-      Kunjungi Profil Facebook
-    </a>
-  </p>
-  <p style="color: #5A2A2A; margin: 8px 0 0 0; font-size: 0.9em;">
-     | Blog: nabillax.blogspot.com
-  </p>
-</div>
+Selamat datang di repositori GitHub Pages milik Nabilla Khanza. Repositori ini berisi sumber situs pribadi yang dipublikasikan di:
 
-## Deskripsi
+https://nabilla099.github.io
 
-Selamat datang di repositori ini. Proyek ini merupakan representasi dari profil dan karya [Nabilla Khanza / nama proyek Anda], yang bertujuan untuk [jelaskan tujuan proyek, misalnya: menampilkan portofolio, menyediakan layanan tertentu, atau mengembangkan aplikasi].
+---
 
-Proyek ini dibangun sebagai wadah untuk [fungsi utama proyek] dan dirancang untuk memberikan [manfaat bagi pengguna]. Dengan mengintegrasikan berbagai teknologi modern, proyek ini mengutamakan kemudahan penggunaan, keandalan, dan skalabilitas.
+## Tentang
 
-## Daftar Isi
+Halo, saya Nabilla Khanza. Di sini saya menampilkan profil, portofolio, dan tulisan dari blog saya.
 
-- [Fitur Utama](#fitur-utama)
-- [Konfigurasi](#konfigurasi)
-- [Kontak](#kontak)
-- [Kontribusi](#kontribusi)
-- [Lisensi](#lisensi)
+- Nama: Nabilla Khanza
+- Blog: https://nabillax.blogspot.com
+- Facebook: https://www.facebook.com/profile.php?id=61592014025326
 
-## Fitur Utama
+Jika ingin mengetahui lebih banyak tentang proyek atau karya saya, silakan cek halaman utama situs.
 
-- Fitur A – [screenshot game]
-- Fitur B – [menu utama]
-- Fitur C – [kategori game]
+---
+
+## Struktur Repository
+
+- `index.html` — Halaman utama situs (atau file Jekyll seperti `index.md`).
+- `assets/` — Gambar, CSS, dan berkas statis.
+- `_config.yml` — (opsional) konfigurasi Jekyll jika digunakan.
+- `README.md` — Dokumentasi singkat (file ini).
+
+---
+
+## Cara Mengedit & Mempublikasikan
+
+1. Fork atau clone repository ini.
+2. Lakukan perubahan pada file HTML/CSS/Markdown di cabang baru.
+3. Commit dan push perubahan ke GitHub.
+4. Jika menggunakan cabang `main` (atau cabang default), GitHub Pages akan membangun dan menerbitkan situs secara otomatis.
+
+Catatan: Jika Anda menggunakan Jekyll, pastikan `_config.yml` dan struktur folder sesuai tema yang dipakai.
+
+---
+
+## Personalisasi Konten
+
+- Ubah `index.html` atau file markdown untuk memperbarui teks dan foto profil.
+- Simpan aset (gambar, foto) di `assets/images/` dan update path di halaman.
+
+---
+
+## Kontribusi
+
+Terima kasih jika Anda ingin membantu memperbaiki atau menambah konten. Silakan buat Pull Request dengan penjelasan perubahan.
+
+Panduan singkat:
+- Tulis deskripsi perubahan yang jelas di pesan commit.
+- Sertakan screenshot jika mengubah tampilan visual.
+- Gunakan bahasa Indonesia yang sopan.
+
+---
+
+## Kontak
+
+- Facebook: https://www.facebook.com/profile.php?id=61592014025326
+- Blog: https://nabillax.blogspot.com
+
+---
+
+## Lisensi
+
+Konten di repositori ini bebas untuk dilihat. Jika Anda ingin menggunakan kembali sebagian konten, harap hubungi pemilik untuk izin atau tambahkan lisensi (mis. MIT) bila perlu.
+
+Terima kasih telah mengunjungi!
