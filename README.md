@@ -2,6 +2,11 @@
   <h1 style="color:#8b0030; margin:0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">✨ Nabilla Khanza ✨</h1>
   <p style="color:#5a1a2a; margin:8px 0 12px 0; font-size:1.05rem;">Halaman GitHub Pages pribadi — profil, portofolio, dan tulisan</p>
   <a href="https://nabilla099.github.io" style="display:inline-block; background:#fff; color:#ff4d8b; padding:8px 14px; border-radius:12px; text-decoration:none; font-weight:600; border:2px solid #ffd1e6;">Kunjungi Situs Saya</a>
+  <p style="margin-top:12px">
+    <a href="https://nabilla099.github.io"><img src="https://img.shields.io/badge/Website-Visit-pink?style=for-the-badge&logo=github" alt="Website Badge"></a>
+    <a href="https://www.facebook.com/profile.php?id=61592014025326"><img src="https://img.shields.io/badge/Facebook-Visit-blue?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook Badge"></a>
+    <a href="https://nabillax.blogspot.com"><img src="https://img.shields.io/badge/Blogger-Blog-ff6f00?style=for-the-badge&logo=blogger&logoColor=white" alt="Blogger Badge"></a>
+  </p>
 </div>
 
 
@@ -9,8 +14,8 @@
 
 Halo! Saya Nabilla Khanza. Di repositori ini tersimpan sumber untuk halaman pribadi saya yang dipublikasikan di GitHub Pages.
 
-- Nama: Nabilla Khanza
-- Blog: https://nabillax.blogspot.com
+- Nama: Nabilla Khanza  
+- Blog: https://nabillax.blogspot.com  
 - Facebook: https://www.facebook.com/profile.php?id=61592014025326
 
 ---
