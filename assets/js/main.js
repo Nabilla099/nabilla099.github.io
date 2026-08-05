@@ -245,7 +245,19 @@ function initHeroStack() {
       a.href = safeHref;
       a.className = posClasses[i] || "stack-phone";
       a.setAttribute("aria-label", g.title);
-      a.style.backgroundImage = `url('${safeScreenshot}')`;
+
+      // escape double quotes for safe insertion into CSS url("...")
+      const safeBg = safeScreenshot.replace(/"/g, '\\"');
+      a.style.backgroundImage = `url("${safeBg}")`;
+
+      // mark external links to open in new tab safely
+      try {
+        const hrefUrl = new URL(safeHref);
+        if (hrefUrl.origin !== window.location.origin) {
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+        }
+      } catch (e) { /* no-op */ }
 
       if (!reduceMotion) {
         a.style.transition = "none";
