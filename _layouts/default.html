@@ -10,6 +10,11 @@
 </head>
 <body>
 
+  <div class="splash" id="splash">
+    <div class="splash-mark">K</div>
+    <div class="splash-dots"><span></span><span></span><span></span></div>
+  </div>
+
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="{{ '/' | relative_url }}">
@@ -19,7 +24,13 @@
 
       <nav class="site-nav" id="site-nav">
         <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Beranda</a>
-        <a href="{{ '/' | relative_url }}#kategori">Kategori</a>
+        <div class="nav-divider"></div>
+        <span class="nav-label">Kategori</span>
+        <a href="{{ '/' | relative_url }}?cat=all#kategori">Semua Game</a>
+        {% assign cats = site.games | map: "category" | compact | uniq | sort %}
+        {% for c in cats %}
+          <a href="{{ '/' | relative_url }}?cat={{ c | url_encode }}#kategori">{{ c }}</a>
+        {% endfor %}
       </nav>
 
       <button class="menu-toggle" id="menu-toggle" aria-label="Buka menu">

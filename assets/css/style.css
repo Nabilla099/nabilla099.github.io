@@ -74,7 +74,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 a{ text-decoration: none; }
 a:visited{ color: inherit; }
 
-img{ max-width: 100%; display: block; }
+img{ max-width: 100%; display: block; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
 
 /* ---------- Layout dasar ---------- */
 .wrap{ max-width: 1120px; margin: 0 auto; padding: 0 20px; }
@@ -371,25 +371,23 @@ footer.site-footer{
 .site-nav a.nav-cta:hover{ color: var(--white); filter: brightness(1.05); }
 
 .menu-toggle{
-  display:none; flex-direction:column; justify-content:center; gap:5px;
+  display:flex; flex-direction:column; justify-content:center; gap:5px;
   width: 40px; height: 40px; border:none; background: var(--pink-100);
-  border-radius: 10px; cursor:pointer;
+  border-radius: 10px; cursor:pointer; flex-shrink: 0;
 }
 .menu-toggle span{ width: 18px; height: 2px; background: var(--pink-700); margin: 0 auto; border-radius: 2px; }
 
-@media (max-width: 860px){
-  .menu-toggle{ display:flex; }
-  .site-nav{
-    position: fixed; inset: 70px 14px auto 14px;
-    background: var(--white); border-radius: var(--radius-lg);
-    flex-direction: column; align-items: stretch; gap: 4px; padding: 10px;
-    box-shadow: 0 20px 40px -14px var(--shadow-pink); border: 1px solid var(--pink-100);
-    transform: translateY(-12px); opacity: 0; pointer-events:none;
-    transition: transform .22s ease, opacity .22s ease;
-  }
-  .site-nav.open{ transform: translateY(0); opacity: 1; pointer-events:auto; }
-  .site-nav a{ text-align:center; }
+.site-nav{
+  position: fixed; inset: 70px 14px auto auto; width: min(240px, calc(100vw - 28px));
+  background: var(--white); border-radius: var(--radius-lg);
+  flex-direction: column; align-items: stretch; gap: 2px; padding: 10px;
+  box-shadow: 0 20px 40px -14px var(--shadow-pink); border: 1px solid var(--pink-100);
+  transform: translateY(-12px); opacity: 0; pointer-events:none;
+  transition: transform .22s ease, opacity .22s ease;
+  max-height: min(70vh, 460px); overflow-y: auto;
 }
+.site-nav.open{ transform: translateY(0); opacity: 1; pointer-events:auto; }
+.site-nav a{ text-align:left; }
 
 /* ---------- Hero v2 ---------- */
 .hero{ padding: 56px 0 20px; overflow:hidden; }
@@ -553,8 +551,9 @@ footer.site-footer{
 
 .social-icon{
   display:inline-flex; align-items:center; justify-content:center;
-  width: 38px; height: 38px; border-radius: 50%;
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
   background: var(--pink-100); color: var(--pink-600);
+  margin: 2px 0 0;
   transition: background .2s ease, color .2s ease, transform .2s ease;
 }
 .social-icon:hover{
@@ -610,4 +609,93 @@ footer.site-footer{
 @media (min-width: 1500px){
   .wrap{ max-width: 1400px; }
   .game-grid{ grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+}
+
+/* =========================================================
+   KH — v4: splash screen, hamburger animasi, dropdown kategori,
+   tombol download modern
+   ========================================================= */
+
+/* ---------- Splash screen ---------- */
+.splash{
+  position: fixed; inset: 0; z-index: 999;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 22px;
+  background:
+    radial-gradient(circle at 20% 20%, var(--pink-200) 0%, transparent 50%),
+    radial-gradient(circle at 85% 80%, var(--pink-300) 0%, transparent 50%),
+    linear-gradient(160deg, var(--pink-100), #ffffff);
+  transition: opacity .5s ease, visibility .5s ease;
+  animation: splashAutoHide 3.2s ease forwards; /* jaga-jaga kalau JS gagal jalan */
+}
+.splash.splash-hide{ opacity: 0; visibility: hidden; pointer-events: none; }
+@keyframes splashAutoHide{
+  0%, 82%{ opacity:1; visibility:visible; }
+  100%{ opacity:0; visibility:hidden; }
+}
+
+.splash-mark{
+  width: 84px; height: 84px; border-radius: 24px;
+  background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+  color: var(--white); font-family: var(--font-display); font-weight: 800; font-size: 2.2rem;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 20px 40px -14px var(--shadow-pink);
+  animation: splashPulse 1.3s ease-in-out infinite;
+}
+@keyframes splashPulse{
+  0%, 100%{ transform: scale(1); }
+  50%{ transform: scale(1.08); }
+}
+
+.splash-dots{ display:flex; gap: 8px; }
+.splash-dots span{
+  width: 8px; height: 8px; border-radius: 50%; background: var(--pink-400);
+  animation: splashDot 1s ease-in-out infinite;
+}
+.splash-dots span:nth-child(2){ animation-delay: .15s; }
+.splash-dots span:nth-child(3){ animation-delay: .3s; }
+@keyframes splashDot{
+  0%, 100%{ transform: translateY(0); opacity:.5; }
+  50%{ transform: translateY(-8px); opacity:1; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .splash-mark, .splash-dots span{ animation: none; }
+  .splash{ animation-duration: .01s; }
+}
+
+/* ---------- Hamburger jadi X saat aktif ---------- */
+.menu-toggle span{ transition: transform .28s ease, opacity .2s ease; }
+.menu-toggle.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.menu-toggle.active span:nth-child(2){ opacity: 0; }
+.menu-toggle.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+/* ---------- Nav dropdown: label & divider kategori ---------- */
+.nav-divider{ height: 1px; background: var(--pink-100); margin: 6px 10px; }
+.nav-label{
+  display:block; padding: 8px 16px 2px;
+  font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--pink-600);
+}
+
+/* ---------- Tombol download modern (bukan gelombang jadul) ---------- */
+.btn::before{
+  content:"";
+  position:absolute; top:0; left:-60%; width:45%; height:100%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,.6), transparent);
+  transform: skewX(-18deg);
+  animation: sheenSweep 3.4s ease-in-out infinite;
+  z-index: 0; pointer-events:none;
+}
+@keyframes sheenSweep{
+  0%{ left: -60%; }
+  35%{ left: 130%; }
+  100%{ left: 130%; }
+}
+.btn-soft::before{
+  background: linear-gradient(115deg, transparent, rgba(255,92,154,.22), transparent);
+}
+.btn-download svg{ animation: arrowBounce 1.7s ease-in-out infinite; }
+@keyframes arrowBounce{
+  0%, 100%{ transform: translateY(0); }
+  50%{ transform: translateY(3px); }
 }

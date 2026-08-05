@@ -8,6 +8,7 @@
 // =========================================================
 
 document.addEventListener("DOMContentLoaded", () => {
+  initSplash();
   initRipple();
   initDownloadButtons();
   initMobileMenu();
@@ -16,7 +17,63 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeroStack();
   initHeroTilt();
   initImageFallback();
+  initImageProtection();
 });
+
+/* ---------- Splash screen loading ---------- */
+function initSplash() {
+  const splash = document.getElementById("splash");
+  if (!splash) return;
+
+  const hide = () => splash.classList.add("splash-hide");
+  const minDelay = new Promise((resolve) => setTimeout(resolve, 550));
+
+  Promise.all([
+    minDelay,
+    new Promise((resolve) => {
+      if (document.readyState === "complete") resolve();
+      else window.addEventListener("load", resolve, { once: true });
+    }),
+  ]).then(hide);
+
+  // Jaga-jaga kalau ada aset yang lambat banget, splash tetap hilang
+  setTimeout(hide, 2500);
+}
+
+/* ---------- Menu mobile (hamburger) ---------- */
+function initMobileMenu() {
+  const toggle = document.getElementById("menu-toggle");
+  const nav = document.getElementById("site-nav");
+  if (!toggle || !nav) return;
+
+  toggle.addEventListener("click", () => {
+    nav.classList.toggle("open");
+    toggle.classList.toggle("active");
+  });
+  nav.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => {
+      nav.classList.remove("open");
+      toggle.classList.remove("active");
+    })
+  );
+
+  document.addEventListener("click", (e) => {
+    if (!nav.classList.contains("open")) return;
+    if (nav.contains(e.target) || toggle.contains(e.target)) return;
+    nav.classList.remove("open");
+    toggle.classList.remove("active");
+  });
+}
+
+/* ---------- Blokir tekan-lama / klik-kanan di semua gambar (termasuk yang dibuat dinamis) ---------- */
+function initImageProtection() {
+  document.addEventListener("contextmenu", (e) => {
+    if (e.target.tagName === "IMG") e.preventDefault();
+  });
+  document.addEventListener("dragstart", (e) => {
+    if (e.target.tagName === "IMG") e.preventDefault();
+  });
+}
 
 /* ---------- Sembunyikan gambar yang gagal dimuat (404/link putus) ---------- */
 function initImageFallback() {
@@ -122,6 +179,17 @@ function initCatalog() {
       update();
     });
   });
+
+  // Kalau datang dari menu hamburung (index.html?cat=Racing#kategori), langsung filter
+  const params = new URLSearchParams(window.location.search);
+  const catParam = params.get("cat");
+  if (catParam && catParam !== "all") {
+    const target = chips.find((c) => c.getAttribute("data-filter") === catParam);
+    if (target) {
+      chips.forEach((c) => c.classList.remove("active"));
+      target.classList.add("active");
+    }
+  }
 
   update();
 }
@@ -264,18 +332,6 @@ function initHeroTilt() {
   visual.addEventListener("mouseleave", () => {
     wrap.style.transform = "";
   });
-}
-
-/* ---------- Menu mobile (hamburger) ---------- */
-function initMobileMenu() {
-  const toggle = document.getElementById("menu-toggle");
-  const nav = document.getElementById("site-nav");
-  if (!toggle || !nav) return;
-
-  toggle.addEventListener("click", () => nav.classList.toggle("open"));
-  nav.querySelectorAll("a").forEach((a) =>
-    a.addEventListener("click", () => nav.classList.remove("open"))
-  );
 }
 
 /* ---------- Carousel screenshot ala Instagram (dots sync) ---------- */
