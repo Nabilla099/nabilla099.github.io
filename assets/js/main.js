@@ -246,9 +246,9 @@ function initHeroStack() {
       a.className = posClasses[i] || "stack-phone";
       a.setAttribute("aria-label", g.title);
 
-      // escape double quotes for safe insertion into CSS url("...")
-      const safeBg = safeScreenshot.replace(/"/g, '\\"');
-      a.style.backgroundImage = `url("${safeBg}")`;
+      // safely quote for insertion into CSS url(...) (escapes quotes and backslashes)
+      const safeBg = JSON.stringify(safeScreenshot);
+      a.style.backgroundImage = `url(${safeBg})`;
 
       // mark external links to open in new tab safely
       try {
