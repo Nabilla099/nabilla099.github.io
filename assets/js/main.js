@@ -206,18 +206,7 @@ function initHeroStack() {
   } catch (e) {
     return; // biarkan fallback statis kalau data gagal dibaca
   }
-
-  function toSafeHttpUrl(value) {
-    if (typeof value !== "string" || !value.trim()) return null;
-    try {
-      const u = new URL(value, window.location.origin);
-      return (u.protocol === "http:" || u.protocol === "https:") ? u.href : null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  games = games.filter((g) => toSafeHttpUrl(g?.screenshot) && toSafeHttpUrl(g?.url));
+  games = games.filter((g) => g.screenshot && g.url);
   if (games.length === 0) return;
 
   const posClasses = ["stack-phone phone-a", "stack-phone phone-b", "stack-phone phone-c"];
@@ -237,15 +226,11 @@ function initHeroStack() {
     const picks = pickRandom(Math.min(3, games.length));
     wrap.innerHTML = "";
     picks.forEach((g, i) => {
-      const safeHref = toSafeHttpUrl(g.url);
-      const safeScreenshot = toSafeHttpUrl(g.screenshot);
-      if (!safeHref || !safeScreenshot) return;
-
       const a = document.createElement("a");
-      a.href = safeHref;
+      a.href = g.url;
       a.className = posClasses[i] || "stack-phone";
       a.setAttribute("aria-label", g.title);
-      a.style.backgroundImage = `url('${safeScreenshot}')`;
+      a.style.backgroundImage = `url('${g.screenshot}')`;
 
       if (!reduceMotion) {
         a.style.transition = "none";
@@ -254,7 +239,7 @@ function initHeroStack() {
       }
 
       const img = document.createElement("img");
-      img.src = safeScreenshot;
+      img.src = g.screenshot;
       img.alt = g.title;
       img.loading = "lazy";
       img.addEventListener("error", () => { a.style.display = "none"; });
