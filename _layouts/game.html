@@ -1,0 +1,99 @@
+---
+layout: default
+---
+<div class="wrap game-detail">
+
+  <a class="back-link" href="{{ '/' | relative_url }}">&larr; Kembali ke daftar game</a>
+
+  <div class="detail-grid">
+    <div class="detail-gallery">
+      {% assign shots = page.screenshots | default: nil %}
+      <div class="ig-carousel" id="ig-carousel">
+        <div class="ig-track">
+          {% if shots %}
+            {% for shot in shots %}
+              {% capture slide_src %}{% if shot contains '://' %}{{ shot }}{% else %}{{ shot | relative_url }}{% endif %}{% endcapture %}
+              <div class="ig-slide" style="background-image:url('{{ slide_src }}')"><img src="{{ slide_src }}" alt="Screenshot {{ page.title }} {{ forloop.index }}" loading="lazy"></div>
+            {% endfor %}
+          {% else %}
+            {% capture slide_src %}{% if page.screenshot contains '://' %}{{ page.screenshot }}{% else %}{{ page.screenshot | relative_url }}{% endif %}{% endcapture %}
+            <div class="ig-slide" style="background-image:url('{{ slide_src }}')"><img src="{{ slide_src }}" alt="Screenshot {{ page.title }}" loading="lazy"></div>
+          {% endif %}
+        </div>
+      </div>
+      {% if shots and shots.size > 1 %}
+      <div class="ig-dots">
+        {% for shot in shots %}
+          <span class="ig-dot {% if forloop.first %}active{% endif %}"></span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="detail-info">
+      {% if page.category %}<div class="eyebrow">{{ page.category }}</div>{% endif %}
+      <h1>{{ page.title }}</h1>
+
+      <div class="spec-list">
+        {% if page.resolution %}
+        <span class="chip">
+          <svg class="chip-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <span class="chip-text"><span class="chip-label">Resolusi</span>{{ page.resolution }}</span>
+        </span>
+        {% endif %}
+        {% if page.size %}
+        <span class="chip">
+          <svg class="chip-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M12 3v18M4 7.5l8 4.5 8-4.5"/></svg>
+          <span class="chip-text"><span class="chip-label">Ukuran</span>{{ page.size }}</span>
+        </span>
+        {% endif %}
+        {% if page.vendor %}
+        <span class="chip">
+          <svg class="chip-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>
+          <span class="chip-text"><span class="chip-label">Vendor</span>{{ page.vendor }}</span>
+        </span>
+        {% endif %}
+        {% if page.translator %}
+        <span class="chip">
+          <svg class="chip-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 4 6 4 9s-1.5 6.4-4 9c-2.5-2.6-4-6-4-9s1.5-6.4 4-9z"/></svg>
+          <span class="chip-text"><span class="chip-label">Translator</span>{{ page.translator }}</span>
+        </span>
+        {% endif %}
+      </div>
+
+      <p class="desc">{{ page.description }}</p>
+
+      <div class="download-row">
+        <button class="btn btn-download" data-url="{{ page.download }}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg>
+          Download Game
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="related-block">
+    <h3>Game lainnya</h3>
+    <div class="game-grid game-grid-compact">
+      {% assign others = site.games | where_exp: "g", "g.url != page.url" | sample: 3 %}
+      {% for game in others %}
+      <a class="game-card" href="{{ game.url | relative_url }}">
+        {% capture rel_src %}{% if game.screenshot contains '://' %}{{ game.screenshot }}{% else %}{{ game.screenshot | relative_url }}{% endif %}{% endcapture %}
+        <div class="phone-frame">
+          <div class="screen" style="background-image:url('{{ rel_src }}')">
+            <img src="{{ rel_src }}" alt="Screenshot {{ game.title }}" loading="lazy">
+          </div>
+        </div>
+        <div class="body">
+          <h3>{{ game.title }}</h3>
+          <div class="meta">
+            {% if game.resolution %}<span>{{ game.resolution }}</span>{% endif %}
+            {% if game.category %}<span>{{ game.category }}</span>{% endif %}
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
