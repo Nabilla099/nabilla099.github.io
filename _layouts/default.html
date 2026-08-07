@@ -6,7 +6,7 @@
   <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23ff5c9a%22/><text x=%2250%25%22 y=%2262%25%22 font-size=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22>K</text></svg>">
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 </head>
 <body>
 
@@ -43,6 +43,24 @@
     {{ content }}
   </main>
 
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-stage">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Tutup preview">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <img class="lightbox-img" id="lightbox-img" alt="Preview screenshot">
+      <span class="watermark">Nabilla Kh</span>
+      <div class="lightbox-controls">
+        <button class="lightbox-btn" id="lightbox-rotate-left" aria-label="Putar ke kiri">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a9 9 0 1 1-1.64 6.36"/><path d="M4 4v5h5"/></svg>
+        </button>
+        <button class="lightbox-btn" id="lightbox-rotate-right" aria-label="Putar ke kanan">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9a9 9 0 1 0 1.64 6.36"/><path d="M20 4v5h-5"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="wrap footer-grid">
       <div>
@@ -71,6 +89,6 @@
     </div>
   </footer>
 
-  <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+  <script src="{{ '/assets/js/main.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
 </body>
 </html>

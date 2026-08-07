@@ -18,7 +18,67 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeroTilt();
   initImageFallback();
   initImageProtection();
+  initLightbox();
 });
+
+/* ---------- Lightbox preview + rotasi ---------- */
+function initLightbox() {
+  const lightbox = document.getElementById("lightbox");
+  const img = document.getElementById("lightbox-img");
+  const closeBtn = document.getElementById("lightbox-close");
+  const rotLeft = document.getElementById("lightbox-rotate-left");
+  const rotRight = document.getElementById("lightbox-rotate-right");
+  const previewBtns = document.querySelectorAll(".preview-btn");
+  if (!lightbox || !img || previewBtns.length === 0) return;
+
+  let rotation = 0;
+
+  function applyRotation() {
+    img.style.transform = `rotate(${rotation}deg)`;
+    img.classList.toggle("rot-90", ((rotation % 360) + 360) % 360 === 90);
+    img.classList.toggle("rot-270", ((rotation % 360) + 360) % 360 === 270);
+  }
+
+  function open(src) {
+    rotation = 0;
+    img.src = src;
+    applyRotation();
+    lightbox.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function close() {
+    lightbox.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  previewBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      open(btn.getAttribute("data-preview-src"));
+    });
+  });
+
+  rotLeft?.addEventListener("click", () => { rotation -= 90; applyRotation(); });
+  rotRight?.addEventListener("click", () => { rotation += 90; applyRotation(); });
+  closeBtn?.addEventListener("click", close);
+
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) close();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") { rotation -= 90; applyRotation(); }
+    if (e.key === "ArrowRight") { rotation += 90; applyRotation(); }
+  });
+
+  // Blokir tekan-lama & klik-kanan di gambar preview besar juga
+  img.addEventListener("contextmenu", (e) => e.preventDefault());
+  img.addEventListener("dragstart", (e) => e.preventDefault());
+}
 
 /* ---------- Splash screen loading ---------- */
 function initSplash() {
@@ -244,6 +304,15 @@ function initHeroStack() {
       img.loading = "lazy";
       img.addEventListener("error", () => { a.style.display = "none"; });
       a.appendChild(img);
+
+      const wm = document.createElement("span");
+      wm.className = "watermark";
+      wm.textContent = "Nabilla Kh";
+      a.appendChild(wm);
+
+      const guard = document.createElement("span");
+      guard.className = "protect-layer";
+      a.appendChild(guard);
       wrap.appendChild(a);
     });
 

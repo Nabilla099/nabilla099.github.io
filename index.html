@@ -68,6 +68,8 @@ title: Beranda
       <div class="phone-frame">
         <div class="screen" style="background-image:url('{{ card_src }}')">
           <img src="{{ card_src }}" alt="Screenshot {{ game.title }}" loading="lazy">
+          <span class="watermark">Nabilla Kh</span>
+          <span class="protect-layer"></span>
         </div>
         {% if game.screenshots and game.screenshots.size > 1 %}
         <span class="multi-badge">{{ game.screenshots.size }} Foto</span>

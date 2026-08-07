@@ -183,6 +183,7 @@ nav.site-nav a:hover{ color: var(--pink-600); }
 .phone-frame .screen::after{
   content:""; position:absolute; inset:0;
   background: linear-gradient(160deg, rgba(255,255,255,.12), rgba(255,92,154,.16));
+  pointer-events:none;
 }
 .phone-frame .screen img{
   position:relative; z-index:1; width:100%; height:100%; object-fit: contain;
@@ -452,6 +453,7 @@ footer.site-footer{
 .stack-phone::after{
   content:""; position:absolute; inset:0;
   background: linear-gradient(160deg, rgba(255,255,255,.15), rgba(255,92,154,.18));
+  pointer-events:none;
 }
 .stack-phone img{
   position:relative; z-index:1; width:100%; height:100%; object-fit: contain; display:block;
@@ -520,6 +522,7 @@ footer.site-footer{
 .ig-slide::after{
   content:""; position:absolute; inset:0;
   background: linear-gradient(160deg, rgba(255,255,255,.12), rgba(255,92,154,.16));
+  pointer-events:none;
 }
 .ig-slide img{
   position:relative; z-index:1; width:100%; height:100%; object-fit: contain;
@@ -698,4 +701,84 @@ footer.site-footer{
 @keyframes arrowBounce{
   0%, 100%{ transform: translateY(0); }
   50%{ transform: translateY(3px); }
+}
+
+/* =========================================================
+   KH — v5: watermark, lapisan anti-copy, tombol preview,
+   lightbox dengan rotasi
+   ========================================================= */
+
+/* ---------- Watermark & lapisan pelindung di setiap screenshot ---------- */
+.watermark{
+  position:absolute; bottom: 8px; right: 10px; z-index: 3;
+  font-family: var(--font-mono); font-size: .62rem; letter-spacing:.03em;
+  color: rgba(255,255,255,.85);
+  text-shadow: 0 1px 3px rgba(0,0,0,.45);
+  pointer-events: none; user-select: none;
+}
+.protect-layer{
+  position:absolute; inset:0; z-index: 2;
+  background: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* ---------- Tombol preview (kaca pembesar) di galeri detail ---------- */
+.preview-btn{
+  position:absolute; top: 12px; right: 12px; z-index: 4;
+  width: 34px; height: 34px; border-radius: 50%; border:none; cursor:pointer;
+  background: rgba(255,255,255,.85); color: var(--pink-600);
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 6px 14px -6px rgba(107,53,80,.4);
+  transition: background .2s ease, transform .2s ease;
+}
+.preview-btn:hover{ background: var(--white); transform: scale(1.06); }
+
+/* ---------- Lightbox preview + rotasi ---------- */
+.lightbox{
+  position: fixed; inset:0; z-index: 998;
+  background: rgba(30,10,20,.88);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; visibility:hidden; transition: opacity .25s ease, visibility .25s ease;
+}
+.lightbox.open{ opacity:1; visibility:visible; }
+
+.lightbox-stage{
+  position:relative; display:flex; align-items:center; justify-content:center;
+  max-width: 92vw; max-height: 82vh;
+}
+.lightbox-img{
+  max-width: 88vw; max-height: 78vh; display:block;
+  border-radius: 12px; box-shadow: 0 20px 50px -10px rgba(0,0,0,.5);
+  transition: transform .3s ease;
+  background: #1a0e14;
+}
+.lightbox-img.rot-90, .lightbox-img.rot-270{
+  max-width: 78vh; max-height: 88vw;
+}
+
+.lightbox-controls{
+  position:absolute; bottom: -60px; left:50%; transform: translateX(-50%);
+  display:flex; gap: 12px;
+}
+.lightbox-btn{
+  width: 44px; height: 44px; border-radius: 50%; border:none; cursor:pointer;
+  background: rgba(255,255,255,.15); color: var(--white);
+  display:flex; align-items:center; justify-content:center;
+  transition: background .2s ease, transform .2s ease;
+}
+.lightbox-btn:hover{ background: rgba(255,255,255,.28); transform: translateY(-2px); }
+
+.lightbox-close{
+  position:absolute; top: -50px; right: 0;
+  width: 40px; height: 40px; border-radius: 50%; border:none; cursor:pointer;
+  background: rgba(255,255,255,.15); color: var(--white);
+  display:flex; align-items:center; justify-content:center;
+  transition: background .2s ease;
+}
+.lightbox-close:hover{ background: rgba(255,255,255,.28); }
+
+@media (max-width: 640px){
+  .lightbox-controls{ bottom: -54px; gap: 10px; }
+  .lightbox-btn{ width: 40px; height: 40px; }
+  .lightbox-close{ top: -46px; }
 }

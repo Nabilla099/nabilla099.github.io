@@ -13,11 +13,25 @@ layout: default
           {% if shots %}
             {% for shot in shots %}
               {% capture slide_src %}{% if shot contains '://' %}{{ shot }}{% else %}{{ shot | relative_url }}{% endif %}{% endcapture %}
-              <div class="ig-slide" style="background-image:url('{{ slide_src }}')"><img src="{{ slide_src }}" alt="Screenshot {{ page.title }} {{ forloop.index }}" loading="lazy"></div>
+              <div class="ig-slide" style="background-image:url('{{ slide_src }}')">
+                <img src="{{ slide_src }}" alt="Screenshot {{ page.title }} {{ forloop.index }}" loading="lazy">
+                <span class="watermark">Nabilla Kh</span>
+                <span class="protect-layer"></span>
+                <button class="preview-btn" data-preview-src="{{ slide_src }}" aria-label="Perbesar screenshot">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg>
+                </button>
+              </div>
             {% endfor %}
           {% else %}
             {% capture slide_src %}{% if page.screenshot contains '://' %}{{ page.screenshot }}{% else %}{{ page.screenshot | relative_url }}{% endif %}{% endcapture %}
-            <div class="ig-slide" style="background-image:url('{{ slide_src }}')"><img src="{{ slide_src }}" alt="Screenshot {{ page.title }}" loading="lazy"></div>
+            <div class="ig-slide" style="background-image:url('{{ slide_src }}')">
+              <img src="{{ slide_src }}" alt="Screenshot {{ page.title }}" loading="lazy">
+              <span class="watermark">Nabilla Kh</span>
+              <span class="protect-layer"></span>
+              <button class="preview-btn" data-preview-src="{{ slide_src }}" aria-label="Perbesar screenshot">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg>
+              </button>
+            </div>
           {% endif %}
         </div>
       </div>
@@ -82,6 +96,8 @@ layout: default
         <div class="phone-frame">
           <div class="screen" style="background-image:url('{{ rel_src }}')">
             <img src="{{ rel_src }}" alt="Screenshot {{ game.title }}" loading="lazy">
+            <span class="watermark">Nabilla Kh</span>
+            <span class="protect-layer"></span>
           </div>
         </div>
         <div class="body">
