@@ -45,7 +45,11 @@ layout: default
     </div>
 
     <div class="detail-info">
-      {% if page.category %}<div class="eyebrow">{{ page.category }}</div>{% endif %}
+      {% if page.category %}
+        {% assign page_cats_str = page.category | replace: ", ", "," %}
+        {% assign page_cats = page_cats_str | split: "," %}
+        <div class="eyebrow">{{ page_cats | join: " • " }}</div>
+      {% endif %}
       <h1>{{ page.title }}</h1>
 
       <div class="spec-list">
@@ -87,13 +91,12 @@ layout: default
   </div>
 
   <div class="related-block">
-    <h3>Game lainnya</h3>
+    {% assign others = site.games | where_exp: "g", "g.url != page.url" | sort: "date" | reverse %}
+    <div class="section-head">
+      <h3>Game lainnya</h3>
+      <span class="section-sub">{{ others | size }} game lain</span>
+    </div>
     <div class="game-grid game-grid-compact">
-      {% assign all_others = site.games | where_exp: "g", "g.url != page.url" | sort: "date" | reverse %}
-      {% assign newest = all_others | slice: 0, 1 %}
-      {% assign remaining = all_others | slice: 1, 50 %}
-      {% assign remaining_sample = remaining | sample: 2 %}
-      {% assign others = newest | concat: remaining_sample %}
       {% for game in others %}
       <a class="game-card" href="{{ game.url | relative_url }}">
         {% capture rel_src %}{% if game.screenshot contains '://' %}{{ game.screenshot }}{% else %}{{ game.screenshot | relative_url }}{% endif %}{% endcapture %}
@@ -118,28 +121,20 @@ layout: default
 
   <div class="comments-block">
     <h3>Komentar</h3>
-    <p class="comments-hint">Login pakai akun GitHub buat komentar. Yuk kasih tau kesan kamu soal game ini~</p>
+    <p class="comments-hint">Tinggal isi nama, nggak perlu login/daftar. Yuk kasih tau kesan kamu soal game ini~</p>
 
     <!--
-      PENTING: ganti nilai data-repo-id dan data-category-id di bawah ini
-      dengan punya kamu sendiri dari giscus.app (lihat panduan setup-nya).
-      data-repo sudah otomatis diisi sesuai info di _config.yml.
+      PENTING: ganti nilai data-app-id di bawah ini dengan App ID
+      punya kamu sendiri dari cusdis.com (lihat panduan setup di README.md).
     -->
-    <script src="https://giscus.app/client.js"
-      data-repo="{{ site.giscus.repo | default: 'Nabilla099/nabilla099.github.io' }}"
-      data-repo-id="{{ site.giscus.repo_id | default: 'GANTI_DENGAN_REPO_ID' }}"
-      data-category="{{ site.giscus.category | default: 'Comments' }}"
-      data-category-id="{{ site.giscus.category_id | default: 'GANTI_DENGAN_CATEGORY_ID' }}"
-      data-mapping="pathname"
-      data-strict="0"
-      data-reactions-enabled="1"
-      data-emit-metadata="0"
-      data-input-position="top"
-      data-theme="noborder_light"
-      data-lang="id"
-      crossorigin="anonymous"
-      async>
-    </script>
+    <div id="cusdis_thread"
+      data-host="https://cusdis.com"
+      data-app-id="{{ site.cusdis.app_id | default: 'GANTI_DENGAN_APP_ID' }}"
+      data-page-id="{{ page.url }}"
+      data-page-url="{{ page.url | absolute_url }}"
+      data-page-title="{{ page.title }}"
+    ></div>
+    <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
   </div>
 
 </div>

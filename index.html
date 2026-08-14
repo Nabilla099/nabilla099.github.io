@@ -16,7 +16,12 @@ title: Beranda
       <div class="hero-stats">
         <div class="stat"><strong>{{ site.games | size }}+</strong><span>Game tersedia</span></div>
         <div class="stat"><strong>100%</strong><span>Bahasa Indonesia</span></div>
-        <div class="stat"><strong>{{ site.games | map: "category" | uniq | compact | size }}</strong><span>Kategori game</span></div>
+        {% assign all_cats_str = "" %}
+        {% for g in site.games %}{% if g.category %}{% assign all_cats_str = all_cats_str | append: "," | append: g.category %}{% endif %}{% endfor %}
+        {% assign all_cats_str = all_cats_str | replace: ", ", "," %}
+        {% assign all_cats_raw = all_cats_str | split: "," %}
+        {% assign all_cats = all_cats_raw | uniq | sort %}
+        <div class="stat"><strong>{{ all_cats | size }}</strong><span>Kategori game</span></div>
       </div>
     </div>
 
@@ -49,9 +54,12 @@ title: Beranda
   </div>
   <div class="chip-filter" id="chip-filter">
     <button class="chip-btn active" data-filter="all">Semua</button>
-    {% assign cats = site.games | map: "category" | compact | uniq | sort %}
+    {% assign all_cats_str2 = "" %}
+    {% for g in site.games %}{% if g.category %}{% assign all_cats_str2 = all_cats_str2 | append: "," | append: g.category %}{% endif %}{% endfor %}
+    {% assign all_cats_str2 = all_cats_str2 | replace: ", ", "," %}
+    {% assign cats = all_cats_str2 | split: "," | uniq | sort %}
     {% for c in cats %}
-      {% if c %}<button class="chip-btn" data-filter="{{ c }}">{{ c }}</button>{% endif %}
+      {% if c != "" %}<button class="chip-btn" data-filter="{{ c }}">{{ c }}</button>{% endif %}
     {% endfor %}
   </div>
 
@@ -63,7 +71,8 @@ title: Beranda
   <div class="game-grid">
     {% assign games = site.games | sort: 'date' | reverse %}
     {% for game in games %}
-    <a class="game-card" href="{{ game.url | relative_url }}" data-search="{{ game.title }} {{ game.category }}" data-category="{{ game.category }}">
+    {% assign game_cats_str = game.category | replace: ", ", "," %}
+    <a class="game-card" href="{{ game.url | relative_url }}" data-search="{{ game.title }} {{ game.category }}" data-category="{{ game_cats_str }}">
       {% capture card_src %}{% if game.screenshot contains '://' %}{{ game.screenshot }}{% else %}{{ game.screenshot | relative_url }}{% endif %}{% endcapture %}
       <div class="phone-frame">
         <div class="screen" style="background-image:url('{{ card_src }}')">
@@ -79,7 +88,8 @@ title: Beranda
         <h3>{{ game.title }}</h3>
         <div class="meta">
           {% if game.resolution %}<span>{{ game.resolution }}</span>{% endif %}
-          {% if game.category %}<span>{{ game.category }}</span>{% endif %}
+          {% assign game_cats = game_cats_str | split: "," %}
+          {% for gc in game_cats %}{% if gc != "" %}<span>{{ gc }}</span>{% endif %}{% endfor %}
         </div>
         <p class="desc">{{ game.description }}</p>
         <span class="open-link">Lihat detail →</span>

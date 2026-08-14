@@ -1,13 +1,10 @@
 title: Kh
 description: "Koleksi game Java J2ME hasil terjemahan ke Bahasa Indonesia."
 
-# Konfigurasi kolom komentar (giscus). Isi setelah setup di giscus.app,
+# Konfigurasi kolom komentar (Cusdis). Isi setelah setup di cusdis.com,
 # lihat panduan lengkapnya di README.md bagian "Setup Komentar".
-giscus:
-  repo: "Nabilla099/nabilla099.github.io"
-  repo_id: "GANTI_DENGAN_REPO_ID"
-  category: "Comments"
-  category_id: "GANTI_DENGAN_CATEGORY_ID"
+cusdis:
+  app_id: "GANTI_DENGAN_APP_ID"
 baseurl: ""
 url: ""
 

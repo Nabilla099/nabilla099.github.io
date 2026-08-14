@@ -27,9 +27,12 @@
         <div class="nav-divider"></div>
         <span class="nav-label">Kategori</span>
         <a href="{{ '/' | relative_url }}?cat=all#kategori">Semua Game</a>
-        {% assign cats = site.games | map: "category" | compact | uniq | sort %}
+        {% assign all_cats_str3 = "" %}
+        {% for g in site.games %}{% if g.category %}{% assign all_cats_str3 = all_cats_str3 | append: "," | append: g.category %}{% endif %}{% endfor %}
+        {% assign all_cats_str3 = all_cats_str3 | replace: ", ", "," %}
+        {% assign cats = all_cats_str3 | split: "," | uniq | sort %}
         {% for c in cats %}
-          <a href="{{ '/' | relative_url }}?cat={{ c | url_encode }}#kategori">{{ c }}</a>
+          {% if c != "" %}<a href="{{ '/' | relative_url }}?cat={{ c | url_encode }}#kategori">{{ c }}</a>{% endif %}
         {% endfor %}
       </nav>
 

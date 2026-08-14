@@ -165,7 +165,8 @@ function initCatalog() {
     const filter = activeChip ? activeChip.getAttribute("data-filter") : "all";
 
     return cards.filter((card) => {
-      const matchCategory = filter === "all" || card.getAttribute("data-category") === filter;
+      const cardCats = (card.getAttribute("data-category") || "").split(",").map((s) => s.trim());
+      const matchCategory = filter === "all" || cardCats.includes(filter);
       const haystack = (card.getAttribute("data-search") || "").toLowerCase();
       const matchSearch = !q || haystack.includes(q);
       return matchCategory && matchSearch;
