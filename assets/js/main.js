@@ -9,6 +9,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   initSplash();
+  initPageTransition();
   initRipple();
   initDownloadButtons();
   initMobileMenu();
@@ -98,6 +99,45 @@ function initSplash() {
 
   // Jaga-jaga kalau ada aset yang lambat banget, splash tetap hilang
   setTimeout(hide, 2500);
+}
+
+/* ---------- Transisi antar halaman: splash muncul lagi sebelum pindah halaman ---------- */
+function initPageTransition() {
+  const splash = document.getElementById("splash");
+  if (!splash) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  document.addEventListener("click", (e) => {
+    if (e.defaultPrevented) return;
+
+    const link = e.target.closest("a[href]");
+    if (!link) return;
+    if (link.target === "_blank" || link.hasAttribute("download")) return;
+
+    const href = link.getAttribute("href");
+    if (!href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") || href.startsWith("javascript:")) return;
+
+    let url;
+    try {
+      url = new URL(href, window.location.href);
+    } catch (err) {
+      return;
+    }
+    if (url.origin !== window.location.origin) return;
+    // Kalau cuma anchor di halaman yang sama (misal #kategori), biarin scroll biasa
+    if (url.pathname === window.location.pathname && url.search === window.location.search && url.hash) return;
+
+    e.preventDefault();
+    splash.classList.remove("splash-hide");
+    setTimeout(() => {
+      window.location.href = href;
+    }, 300);
+  });
+
+  // Kalau user tekan tombol back/forward, splash juga muncul sebentar biar mulus
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) splash.classList.remove("splash-hide");
+  });
 }
 
 /* ---------- Menu mobile (hamburger) ---------- */

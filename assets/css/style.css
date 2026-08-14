@@ -646,48 +646,60 @@ footer.site-footer{
 /* ---------- Splash screen ---------- */
 .splash{
   position: fixed; inset: 0; z-index: 999;
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 22px;
-  background:
-    radial-gradient(circle at 20% 20%, var(--pink-200) 0%, transparent 50%),
-    radial-gradient(circle at 85% 80%, var(--pink-300) 0%, transparent 50%),
-    linear-gradient(160deg, var(--pink-100), #ffffff);
-  transition: opacity .5s ease, visibility .5s ease;
-  animation: splashAutoHide 3.2s ease forwards; /* jaga-jaga kalau JS gagal jalan */
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap: 30px;
+  background: linear-gradient(165deg, var(--pink-100) 0%, #ffffff 55%, var(--pink-50) 100%);
+  overflow: hidden;
+  opacity: 1; visibility: visible;
+  transition: opacity .45s cubic-bezier(.4,0,.2,1), visibility .45s;
 }
 .splash.splash-hide{ opacity: 0; visibility: hidden; pointer-events: none; }
-@keyframes splashAutoHide{
-  0%, 82%{ opacity:1; visibility:visible; }
-  100%{ opacity:0; visibility:hidden; }
+
+.splash-blob{
+  position:absolute; border-radius:50%; filter: blur(60px); opacity:.5; z-index:0;
+  animation: blobFloat 7s ease-in-out infinite;
+}
+.splash-blob.b1{ width:280px; height:280px; background: var(--pink-300); top:-70px; left:-70px; }
+.splash-blob.b2{
+  width:240px; height:240px; background: var(--pink-400);
+  bottom:-60px; right:-50px; animation-delay: -3.2s;
+}
+@keyframes blobFloat{
+  0%, 100%{ transform: translate(0,0) scale(1); }
+  50%{ transform: translate(22px,-18px) scale(1.08); }
 }
 
 .splash-mark{
-  width: 84px; height: 84px; border-radius: 24px;
-  background: linear-gradient(135deg, var(--pink-400), var(--pink-600));
+  position:relative; z-index:1;
+  width: 84px; height: 84px; border-radius: 26px;
+  background: linear-gradient(150deg, var(--pink-400), var(--pink-600));
   color: var(--white); font-family: var(--font-display); font-weight: 800; font-size: 2.2rem;
   display:flex; align-items:center; justify-content:center;
-  box-shadow: 0 20px 40px -14px var(--shadow-pink);
-  animation: splashPulse 1.3s ease-in-out infinite;
+  border: 3px solid var(--toon-outline);
+  box-shadow: 0 7px 0 var(--pink-700);
+  animation: splashPop .65s cubic-bezier(.34,1.56,.64,1) both, splashFloat 2.6s ease-in-out .65s infinite;
 }
-@keyframes splashPulse{
-  0%, 100%{ transform: scale(1); }
-  50%{ transform: scale(1.08); }
+@keyframes splashPop{
+  0%{ transform: scale(.35) rotate(-14deg); opacity: 0; }
+  100%{ transform: scale(1) rotate(0); opacity: 1; }
+}
+@keyframes splashFloat{
+  0%, 100%{ transform: translateY(0); }
+  50%{ transform: translateY(-6px); }
 }
 
-.splash-dots{ display:flex; gap: 8px; }
-.splash-dots span{
-  width: 8px; height: 8px; border-radius: 50%; background: var(--pink-400);
-  animation: splashDot 1s ease-in-out infinite;
+.splash-ring{
+  position:relative; z-index:1;
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 4px solid var(--pink-100);
+  border-top-color: var(--pink-600);
+  animation: splashSpin .75s linear infinite;
 }
-.splash-dots span:nth-child(2){ animation-delay: .15s; }
-.splash-dots span:nth-child(3){ animation-delay: .3s; }
-@keyframes splashDot{
-  0%, 100%{ transform: translateY(0); opacity:.5; }
-  50%{ transform: translateY(-8px); opacity:1; }
-}
+@keyframes splashSpin{ to{ transform: rotate(360deg); } }
 
 @media (prefers-reduced-motion: reduce){
-  .splash-mark, .splash-dots span{ animation: none; }
-  .splash{ animation-duration: .01s; }
+  .splash-blob{ animation: none; }
+  .splash-mark{ animation: none; }
+  .splash-ring{ animation-duration: 1.6s; }
 }
 
 /* ---------- Hamburger jadi X saat aktif ---------- */
