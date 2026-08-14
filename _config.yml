@@ -1,10 +1,5 @@
 title: Kh
 description: "Koleksi game Java J2ME hasil terjemahan ke Bahasa Indonesia."
-
-# Konfigurasi kolom komentar (Cusdis). Isi setelah setup di cusdis.com,
-# lihat panduan lengkapnya di README.md bagian "Setup Komentar".
-cusdis:
-  app_id: "GANTI_DENGAN_APP_ID"
 baseurl: ""
 url: ""
 

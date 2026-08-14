@@ -119,22 +119,4 @@ layout: default
     </div>
   </div>
 
-  <div class="comments-block">
-    <h3>Komentar</h3>
-    <p class="comments-hint">Tinggal isi nama, nggak perlu login/daftar. Yuk kasih tau kesan kamu soal game ini~</p>
-
-    <!--
-      PENTING: ganti nilai data-app-id di bawah ini dengan App ID
-      punya kamu sendiri dari cusdis.com (lihat panduan setup di README.md).
-    -->
-    <div id="cusdis_thread"
-      data-host="https://cusdis.com"
-      data-app-id="{{ site.cusdis.app_id | default: 'GANTI_DENGAN_APP_ID' }}"
-      data-page-id="{{ page.url }}"
-      data-page-url="{{ page.url | absolute_url }}"
-      data-page-title="{{ page.title }}"
-    ></div>
-    <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
-  </div>
-
 </div>

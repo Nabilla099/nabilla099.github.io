@@ -806,18 +806,3 @@ footer.site-footer{
   .lightbox-btn{ width: 40px; height: 40px; }
   .lightbox-close{ top: -46px; }
 }
-
-/* =========================================================
-   KH — v5: section komentar (giscus)
-   ========================================================= */
-.comments-block{
-  margin-top: 50px; padding-top: 34px;
-  border-top: 1px solid var(--pink-100);
-}
-.comments-block h3{
-  font-family: var(--font-display); font-size: 1.2rem; color: var(--rose-ink);
-  margin: 0 0 6px;
-}
-.comments-hint{
-  font-size: .88rem; color: var(--rose-ink-soft); margin: 0 0 20px;
-}

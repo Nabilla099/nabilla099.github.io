@@ -71,7 +71,7 @@ title: Beranda
   <div class="game-grid">
     {% assign games = site.games | sort: 'date' | reverse %}
     {% for game in games %}
-    {% assign game_cats_str = game.category | replace: ", ", "," %}
+    {% assign game_cats_str = game.category | default: "" | replace: ", ", "," %}
     <a class="game-card" href="{{ game.url | relative_url }}" data-search="{{ game.title }} {{ game.category }}" data-category="{{ game_cats_str }}">
       {% capture card_src %}{% if game.screenshot contains '://' %}{{ game.screenshot }}{% else %}{{ game.screenshot | relative_url }}{% endif %}{% endcapture %}
       <div class="phone-frame">
